@@ -35,7 +35,7 @@ P14. Infinite canvas may grow in any direction during explanation. Final long-ca
 
 ## Engine and brand handoff
 
-When requested, use OpenFilm as the composition/export host and the selected Video Factory rules for logo, progress and subtitles. Record exact positions and versions in the brief. This is an optional project-local integration, not a bundled dependency or a promise of native support. Keep world drawings/camera separate from fixed logo, subtitles and progress UI. Never expose local access tokens in public packages.
+For full-film delivery, apply PRESENTATION.md and explicitly select OpenFilm, ChatCut or both; do not infer a platform from a prior project. Record exact positions and versions in the brief. This is an optional project-local integration, not a bundled dependency or a promise of native support. Keep world drawings/camera separate from fixed logo, subtitles and progress UI. Never expose local access tokens in public packages.
 
 ## Thumbnail and publishing
 

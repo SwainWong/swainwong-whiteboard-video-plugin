@@ -1,0 +1,56 @@
+{
+  "schema": "whiteboard.presentation.v1",
+  "reference_size": [
+    1920,
+    1080
+  ],
+  "platforms": [
+    "OpenFilm",
+    "ChatCut",
+    "both"
+  ],
+  "progress": {
+    "height": 70,
+    "background": "#24272bcc",
+    "fill": "#d32e68d9",
+    "text": "#ffffff",
+    "font_size": 28,
+    "gap": 0,
+    "radius": 0,
+    "divider_width": 1
+  },
+  "subtitles": {
+    "center_x": 960,
+    "bottom": 70,
+    "visible_glyph_height": 48,
+    "background_opacity": 0.86,
+    "max_lines": 2,
+    "padding_x": [
+      10,
+      16
+    ],
+    "padding_y": [
+      6,
+      10
+    ],
+    "max_seconds": 4.5,
+    "limits": {
+      "zh": {
+        "characters": 20,
+        "cps": 12
+      },
+      "en": {
+        "characters_without_spaces": 56,
+        "cps": 24
+      }
+    }
+  },
+  "logo": {
+    "right": 40,
+    "bottom": 26,
+    "visible_width": 245,
+    "background": false,
+    "sha256": "cdfdaad38a1e8eaf6496e20daaf33b9a7930c61beb6776d56be802345b6dca6c"
+  },
+  "slogan": "Follow the tech.  Follow the money."
+}

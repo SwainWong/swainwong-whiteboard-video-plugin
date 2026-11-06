@@ -1,0 +1,12 @@
+{
+  "synced_on": "2026-11-06",
+  "source": "swainwong-video-workflow",
+  "files": {
+    "references/production-standard.md": "98d489880de08412968a4e813049a01687f7818fc54253f9dbe7a89d5e3d321c",
+    "references/ci-and-media-standard.md": "3244090b293b4adf3580c93b76e03bf96d76557f4c24b76d3b69424b72bc5c25",
+    "references/editorial-style-and-subtitles.md": "8e624a302a70faa8b657b7412a02a29fc281101759c237ce4c8ab0cbb9a28277",
+    "references/production-brief.md": "49d7e4bea57876c841d127648b197a700a2d9cbe1475fbb85e8f54e47f3c19a1",
+    "references/brand-and-module-rhythm.md": "bf45607f839edf0b7ee41abceaf9b921f4a5bc7a91f5d6e590a46c1264044745",
+    "assets/brand-ci/swaintalk-ci-v1.json": "b2fa9d3746ac5db83b96694784d262ead7b9f799c150b46933a0209cd736b75c"
+  }
+}

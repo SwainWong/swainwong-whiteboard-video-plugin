@@ -74,3 +74,9 @@ D09当前为向下曲线分支；D10使用带原视频/帧/哈希的完成PNG，
 [Production harness](skills/whiteboard-video/harness/PRODUCTION.md) 将逐句口播映射到有机画布上的简笔画与资料图，规定对象辨识、连续手部与可验证的交付。输入为 brief、口播时间、来源和品牌资产；输出为 cue map、动画输入、审核证据与发布包，交给动画、剪辑和发布环节。
 
 SwainTalk 封面配置使用右下角商标、清晰短标题和可辨认的人物/产品。标题与描述须贴合成片；不承诺关键词避让能保证推荐或广告收益。OpenFilm / Video Factory 对接仅在项目要求时使用，不是插件内置依赖。
+
+## 整片展示层与制作平台
+
+[展示层合同](skills/whiteboard-video/harness/PRESENTATION.md)接收平台、最终音轨时钟、章节、字幕语言和原Logo，以独立屏幕层组织顶部进度、底中短语字幕与右下透明水印。输出展示配置和检查报告交给用户选定的OpenFilm或ChatCut合成；双平台分别验收。Remotion继续生成白板动画素材。
+
+复制[参数配置](docs/presentation-profile.json)到项目的layout字段，按合同准备presentation.json，然后运行 `python3 scripts/check_presentation.py /path/to/presentation.json`。校验不自动装配平台，也不代替最终像素与实际听看。该合同不会将白板改成纸艺或强制第三方满屏；封面Logo与视频水印独立。

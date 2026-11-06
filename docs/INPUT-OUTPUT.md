@@ -94,3 +94,7 @@ D08/D11的总帧数至少为`20 + glyph数量 × 27 + 100`，不足直接拒绝�
 项目应交付：内容简报、实际props、可搬迁public资产、来源/锚点/快照台账、选用/省略计划、渲染MP4、当前文件哈希及检查报告。文字/路径仍可编辑，D10快照需要回原composition修改后再生成。
 
 失败返回具体字段或资产缺口；必需输入缺失不默默换成研究示例。技术检查只证明对应技术事实：路径存在不证明画得好，快照哈希不证明源帧正确，像素相符不证明正常速度流畅，均不等于用户接受。
+
+## 整片展示层输入（独立于 scene）
+
+`presentation.json` 为全片合成合同，不传入 D01–D11 scene，不改变旧效果接口。必需字段及默认token见 [PRESENTATION](../skills/whiteboard-video/harness/PRESENTATION.md) 和 [profile](presentation-profile.json)。制作前校验配置，交付前以最终音轨时长重新运行 `python3 scripts/check_presentation.py presentation.json`。失败只阻止整片展示层交付，不阻止独立动画素材准备。输出JSON报告含配置范围和错误，退出码0/1；不自动创建平台工程或给出像素/AV通过。
