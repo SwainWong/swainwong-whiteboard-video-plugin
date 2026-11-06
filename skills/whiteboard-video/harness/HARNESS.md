@@ -38,3 +38,7 @@
 ## 长篇制作与发布补充
 
 每次长篇制作同时执行 [Production harness](PRODUCTION.md)：逐句画面对照、有机无限画布、标志性对象、连续手部、实际口播对齐，以及品牌封面和发布文案。其检查项是制作/审核合同，不冒充已经实现的自动检测。
+
+## SwainTalk 连续画布首尾
+
+制作SwainTalk整片时执行 [品牌站合同](BRAND-STATIONS.md)。品牌展示阶段隐藏手是首尾边界特例，不放宽正文跨对象连续手部要求；品牌站属worldLayer，常驻小水印属screenLayer。

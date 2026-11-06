@@ -43,3 +43,7 @@ x=0,y=0,width=1920,height=70，深灰#24272bcc，玫红#d32e68d9，白字，参�
 运行 `python3 scripts/check_presentation.py PROJECT/presentation.json`。项目复制profile为layout，并提供schema、platform、selection_basis、size、duration、spoken_language、subtitle_languages（数组，可空）、subtitle_authority、chapters（start/end/label）、logo_path与logo_only_reason。路径相对该JSON，禁止机器专用路径；logo文件缺失/身份不符拒绝。明确用户替换Logo用logo_override_basis记录。参数覆盖在layout_override中记录依据，并附review_evidence路径。
 
 该命令只检查配置、来源身份、章节连续性与必须字段，不会自动创建OpenFilm/ChatCut工程，不解析MP4或识别字体、语言、重复字幕。交付前必须运行，并额外提交：单/双行及最长字幕、每章边界、半程/结尾进度、浅深背景Logo、画布运动极值的最终输出帧；完整听看核同步/不闪/可读。改音频或总时长须重算字幕、章节与全局进度。机械PASS不能代替实际播放和用户确认。
+
+## 首尾品牌站与角标交接
+
+首尾大品牌组合执行 [BRAND-STATIONS](BRAND-STATIONS.md)，位于worldLayer；正文角标仍是固定screenLayer。品牌展示期间允许隐藏角标与绘画手，防止重复品牌和遮挡；不允许以此例外逐对象淡出。最终导航时间域、字幕与声音统一映射，首尾新增时长计入全片时钟。

@@ -80,3 +80,7 @@ SwainTalk 封面配置使用右下角商标、清晰短标题和可辨认的人�
 [展示层合同](skills/whiteboard-video/harness/PRESENTATION.md)接收平台、最终音轨时钟、章节、字幕语言和原Logo，以独立屏幕层组织顶部进度、底中短语字幕与右下透明水印。输出展示配置和检查报告交给用户选定的OpenFilm或ChatCut合成；双平台分别验收。Remotion继续生成白板动画素材。
 
 复制[参数配置](docs/presentation-profile.json)到项目的layout字段，按合同准备presentation.json，然后运行 `python3 scripts/check_presentation.py /path/to/presentation.json`。校验不自动装配平台，也不代替最终像素与实际听看。该合同不会将白板改成纸艺或强制第三方满屏；封面Logo与视频水印独立。
+
+## SwainTalk 片头与片尾
+
+[连续画布品牌站合同](skills/whiteboard-video/harness/BRAND-STATIONS.md)接收原Logo、固定口号、画纸色、正文首末镜头状态和实际音轨时间。在同一白板世界中设计品牌显现、可读停留、镜头移入正文与片尾返回品牌；首尾品牌展示时隐藏绘画手，正文保持连续绘制。输出品牌站配置、宿主实现和边界听看证据，交给所选平台合成。当前是明确的制作合同，未新增自动整片相机API；无新增D12配方。
