@@ -1,0 +1,27 @@
+{
+  "scene": {
+    "effectId": "D07",
+    "durationFrames": 240,
+    "objects": [
+      {
+        "x": 500,
+        "y": 250,
+        "scale": 1.5,
+        "asset": {
+          "type": "builtin",
+          "name": "factory"
+        }
+      }
+    ],
+    "foreground": [
+      {
+        "x": 1100,
+        "y": 450,
+        "asset": {
+          "type": "builtin",
+          "name": "car"
+        }
+      }
+    ]
+  }
+}

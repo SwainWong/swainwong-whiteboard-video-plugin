@@ -1,0 +1,2 @@
+import React from 'react';import {Img,staticFile} from 'remotion';import config from './hand-config.json';
+export const Hand=({x,y,opacity=1}:{x:number,y:number,opacity?:number})=>config.status!=='CALIBRATED'?null:<Img src={staticFile(config.asset)} style={{position:'absolute',left:x-config.tipAnchor[0]*config.displayScale,top:y-config.tipAnchor[1]*config.displayScale,width:config.width*config.displayScale,height:config.height*config.displayScale,opacity,pointerEvents:'none'}}/>;

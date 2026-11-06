@@ -1,0 +1,90 @@
+[
+  {
+    "id": "D01",
+    "composition": "OutlineThenColor",
+    "kind": "draw",
+    "name": "轮廓逐笔→整组填色",
+    "description": "手描各部分轮廓，完成后整组上色。",
+    "duration_frames": 330
+  },
+  {
+    "id": "D02",
+    "composition": "IncrementalBoard",
+    "kind": "accumulate",
+    "name": "同画布逐项累积",
+    "description": "已完成对象保持，新对象在留白区绘制。",
+    "duration_frames": 240
+  },
+  {
+    "id": "D03",
+    "composition": "FinishedAssetFade",
+    "kind": "card",
+    "name": "现成图固定位置渐入",
+    "description": "成品图片透明度增加，无笔、无尺度弹跳。",
+    "duration_frames": 240
+  },
+  {
+    "id": "D04",
+    "composition": "BoardUpClear",
+    "kind": "up",
+    "name": "整板上移清屏",
+    "description": "旧图整体上移，白底留下供下一段绘制。",
+    "duration_frames": 300
+  },
+  {
+    "id": "D05",
+    "composition": "BoardPanLeft",
+    "kind": "pan",
+    "name": "整板左移腾出空间",
+    "description": "已有对象整体左移，保持关系，为右侧腾位。",
+    "duration_frames": 300
+  },
+  {
+    "id": "D06",
+    "composition": "PalmPlace",
+    "kind": "place",
+    "name": "手掌摆放现成资料图",
+    "description": "无笔手掌推动现成图片入场，图片停稳后手离开。",
+    "duration_frames": 240
+  },
+  {
+    "id": "D07",
+    "composition": "LayeredOverlay",
+    "kind": "overlay",
+    "name": "前景图渐入覆盖底图",
+    "description": "上层图像渐入，底图仍保留。",
+    "duration_frames": 240
+  },
+  {
+    "id": "D08",
+    "composition": "LetterOutlineSweep",
+    "kind": "letters",
+    "name": "字形轮廓描绘→字内填色",
+    "description": "字形完成后，扫过字形内部填色；属于原片机制的派生变体。",
+    "duration_frames": 240
+  },
+  {
+    "id": "D09",
+    "composition": "BranchOutlineOrder",
+    "kind": "branch",
+    "name": "对象先行，分支箭头后绘制",
+    "description": "先置入完整对象，再手绘曲线单线与独立箭头头部；这是本轮优化变体，原片使用双边实体箭头轮廓。",
+    "duration_frames": 240
+  },
+  {
+    "id": "D10",
+    "composition": "WholeBoardZoomOut",
+    "kind": "overview",
+    "name": "长画布拉远总览",
+    "description": "由最后一个已完成stage拉远，展示按真实完成快照顺序纵向排列的完整画布；示例素材来自另外10条已有动画的完成态。",
+    "duration_frames": 240
+  },
+  {
+    "id": "D11",
+    "composition": "LetterBackgroundSweep",
+    "kind": "background-letters",
+    "name": "字形轮廓描绘→背景涂色",
+    "description": "描完字形后，用可配置颜色扫过稳定、不规则手绘边缘的背景色块。",
+    "duration_frames": 240
+  }
+]

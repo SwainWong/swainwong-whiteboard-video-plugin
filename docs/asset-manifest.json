@@ -1,0 +1,27 @@
+[
+  {
+    "file": "runtime/public/assets/writing-hand-long.png",
+    "sha256": "d1daeb3ac4c640211988b2224049ddd224ca3890d1d4c7332b8f84feb7e49ec8",
+    "origin": "Generated photographic writing hand from the prior approved local prototype; reused unchanged."
+  },
+  {
+    "file": "runtime/public/assets/palm-real.png",
+    "sha256": "faf2f90385be90715b9300d245a5879d621f30343d9d30b7bd976aea9d89957d",
+    "origin": "Generated photographic dorsal hand and forearm; created for this whiteboard study, not a photographed person."
+  },
+  {
+    "file": "runtime/public/fonts/NotoSans.ttf",
+    "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+    "origin": "Google Fonts Noto Sans variable font; SIL OFL 1.1; exact source in runtime/public/fonts/provenance.json"
+  },
+  {
+    "file": "runtime/src/Artwork.tsx",
+    "sha256": "86c709e09eccf8f9fcc8db0d9f9199646acb12299589d9daa010e32601dc15e8",
+    "origin": "Original editable editorial illustrations authored in this project family."
+  },
+  {
+    "file": "runtime/src/letter-paths.json",
+    "sha256": "3e595d34a66785a50f8fa30fb009598a146d7f3ea52e4bfe18ae22c1b8fcca42",
+    "origin": "Derived SALE glyph outlines from Noto Sans Bold; not handwriting stroke-order data."
+  }
+]

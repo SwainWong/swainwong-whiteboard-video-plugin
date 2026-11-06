@@ -1,0 +1,102 @@
+[
+  {
+    "id": "D01",
+    "src": "assets/completed-stages/D01.png",
+    "provenance": {
+      "sourceComposition": "OutlineThenColor",
+      "sourceVideoSHA256": "58274b01d24d47528c90191c1204397411b36f262dee53d69aa1eba3b135f2ae",
+      "frame": 329,
+      "snapshotSHA256": "10b8d64d58074ab0ad5272c4215c96fa235ee98c9fe8d21b1d60ec0b80a590e4"
+    }
+  },
+  {
+    "id": "D02",
+    "src": "assets/completed-stages/D02.png",
+    "provenance": {
+      "sourceComposition": "IncrementalBoard",
+      "sourceVideoSHA256": "0a72a4476c92a3221a2afb7657b123b118da488953dd5f2c07f5b46719c4d6d4",
+      "frame": 239,
+      "snapshotSHA256": "3889a22cc00b7d69e17e3728030e622cfa61c121fbcfc34dbca16fea37b103f6"
+    }
+  },
+  {
+    "id": "D03",
+    "src": "assets/completed-stages/D03.png",
+    "provenance": {
+      "sourceComposition": "FinishedAssetFade",
+      "sourceVideoSHA256": "2c02e998517674f8e57762001784c28f42a9b21ab9e4371e8ac0b4cb57fd1bd2",
+      "frame": 239,
+      "snapshotSHA256": "fbcad8fa15ba8c07942dc1d4687a001e89a2f6e3fa9878ee52296ea4a941ea0a"
+    }
+  },
+  {
+    "id": "D04",
+    "src": "assets/completed-stages/D04.png",
+    "provenance": {
+      "sourceComposition": "BoardUpClear",
+      "sourceVideoSHA256": "92c7fe7f45687fd70cc72c769610f674098990b4c9d8776ec48bd036f0345664",
+      "frame": 299,
+      "snapshotSHA256": "460085707ef7501486c43916f3a195d3a7724975238ce63b73ddafaac012260f"
+    }
+  },
+  {
+    "id": "D05",
+    "src": "assets/completed-stages/D05.png",
+    "provenance": {
+      "sourceComposition": "BoardPanLeft",
+      "sourceVideoSHA256": "93f0fa46f9d2feb800f8736a8be2709d64132a1e8ed8b169d4f3a47f08d95c1e",
+      "frame": 299,
+      "snapshotSHA256": "642b18afd41f84b81967d181613e6d94d46dcb9f075358925e52fffee96c88b0"
+    }
+  },
+  {
+    "id": "D06",
+    "src": "assets/completed-stages/D06.png",
+    "provenance": {
+      "sourceComposition": "PalmPlace",
+      "sourceVideoSHA256": "0ff895abf8c7da5d64f012c4ed3accbdf6ed60cc9b8b5c1c1397b7bbddd16841",
+      "frame": 239,
+      "snapshotSHA256": "175c22d389bd52c0561f77116d03c1ba554658e663a5a58fb718d0fb43f7f82e"
+    }
+  },
+  {
+    "id": "D07",
+    "src": "assets/completed-stages/D07.png",
+    "provenance": {
+      "sourceComposition": "LayeredOverlay",
+      "sourceVideoSHA256": "bc549f9d765dc9672935d2fb7ff32fb8146d3b58b600b392ee2f3f4c6e76ab5b",
+      "frame": 239,
+      "snapshotSHA256": "532adca5680e7675533a0bbb3c512995546bc4710ed7d18ed199b2607e68ea90"
+    }
+  },
+  {
+    "id": "D08",
+    "src": "assets/completed-stages/D08.png",
+    "provenance": {
+      "sourceComposition": "LetterOutlineSweep",
+      "sourceVideoSHA256": "e235c6ecb76115deda5ab8572972d7d3178094ab9baac022466fede94fc0143e",
+      "frame": 239,
+      "snapshotSHA256": "809cad2611a1664eeb95be023fe4ac68fef64b08053c08f375dc2a2095ab82f2"
+    }
+  },
+  {
+    "id": "D09",
+    "src": "assets/completed-stages/D09.png",
+    "provenance": {
+      "sourceComposition": "BranchOutlineOrder",
+      "sourceVideoSHA256": "94d15697eb79bba62479351341e7acddbdc1be75a74e955daf1c0090bc5ec9b5",
+      "frame": 239,
+      "snapshotSHA256": "4aabf41b026e2a874ad504aa10e022986a044047ec6c47f1aebd83a6697f4835"
+    }
+  },
+  {
+    "id": "D11",
+    "src": "assets/completed-stages/D11.png",
+    "provenance": {
+      "sourceComposition": "LetterBackgroundSweep",
+      "sourceVideoSHA256": "9684ac0fbeadaf1be423ae79daddf3e21064ec5d72978b7f3d62bb6a6ed55651",
+      "frame": 239,
+      "snapshotSHA256": "7fdacb5fb640a9d683f3b5101fc9e045681de2e26b5fdb333de06ba3f548139f"
+    }
+  }
+]

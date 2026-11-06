@@ -1,0 +1,23 @@
+{
+  "scene": {
+    "effectId": "D01",
+    "durationFrames": 240,
+    "draw": {
+      "x": 500,
+      "y": 300,
+      "scale": 2,
+      "cue": {
+        "id": "character-one",
+        "start": 30,
+        "end": 170,
+        "readHold": 30
+      },
+      "paths": [
+        {
+          "d": "M 0 70 H 300",
+          "fill": "none"
+        }
+      ]
+    }
+  }
+}

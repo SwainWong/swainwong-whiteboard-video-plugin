@@ -1,0 +1,3 @@
+const fs=require('node:fs'),path=require('node:path'),ts=require('typescript');
+for(const ext of ['.ts','.tsx'])require.extensions[ext]=(m,file)=>m._compile(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.React,esModuleInterop:true,resolveJsonModule:true}}).outputText,file);
+try{const raw=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));const scene=raw.scene??raw;const api=require('./src/scene.ts');api.validateScene(scene);process.stdout.write(JSON.stringify({ok:true,effectId:scene.effectId,durationFrames:scene.durationFrames,drawingPlan:scene.draw?api.drawingPlan(scene):undefined})+'\n');}catch(e){process.stderr.write(JSON.stringify({ok:false,error:e.message})+'\n');process.exitCode=1;}

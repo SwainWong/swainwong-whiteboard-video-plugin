@@ -1,0 +1,4 @@
+interface:
+  display_name: "Whiteboard Animation"
+  short_description: "制作连续白板讲解动画，支持手绘、文字、图片置入和真实画布总览"
+  default_prompt: "使用 $whiteboard-video，把我的讲解文字和图片素材制作成连贯的白板动画，并交付可编辑工程。"

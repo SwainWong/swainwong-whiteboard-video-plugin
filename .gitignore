@@ -1,0 +1,16 @@
+node_modules/
+**/node_modules/
+**/.npm-cache/
+**/__pycache__/
+*.pyc
+.DS_Store
+dist/
+verification/
+runtime/out/
+runtime/.whiteboard/
+*.log
+*.mp4
+*.mov
+*.wav
+*.zip
+.env*

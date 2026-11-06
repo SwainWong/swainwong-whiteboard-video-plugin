@@ -1,0 +1,16 @@
+{
+  "scene": {
+    "effectId": "D11",
+    "durationFrames": 240,
+    "glyphs": {
+      "width": 100,
+      "height": 1000,
+      "glyphs": [
+        {
+          "x": 0,
+          "d": "M 0 0 H 100 V 1000 H 0 Z"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "swainwong-whiteboard-video-plugin",
+  "version": "0.1.0",
+  "description": "Create mature whiteboard explainer videos with eleven source-backed animation recipes, calibrated hands, narration budgets and executable input contracts.",
+  "author": {"name": "SwainWong"},
+  "keywords": ["whiteboard-animation", "explainer-video", "remotion", "hand-drawn", "harness"],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "interface": {
+        "displayName": "SwainWong Whiteboard Video",
+        "shortDescription": "白板手绘讲解视频：11种动画、素材合同与运行检查",
+        "longDescription": "Produce editable whiteboard explainers using mature illustrations, real-looking hand assets, ordered paths, finished-image placement and vertical completed-stage overviews. Includes local Remotion templates and validation; does not claim automatic image-to-stroke conversion or audiovisual acceptance.",
+        "developerName": "SwainWong",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "brandColor": "#578C8A",
+        "defaultPrompt": ["使用白板手绘视频插件，根据我的文稿和图片准备素材、选择动画、检查输入并渲染可编辑视频。"]
+      }
+    }
+  }
+}

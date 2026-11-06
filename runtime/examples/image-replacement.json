@@ -1,0 +1,18 @@
+{
+  "scene": {
+    "effectId": "D03",
+    "durationFrames": 240,
+    "objects": [
+      {
+        "x": 450,
+        "y": 240,
+        "asset": {
+          "type": "image",
+          "src": "assets/palm-real.png",
+          "width": 960,
+          "height": 640
+        }
+      }
+    ]
+  }
+}

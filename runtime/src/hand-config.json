@@ -1,0 +1,12 @@
+{
+  "asset": "assets/writing-hand-long.png",
+  "width": 724,
+  "height": 2172,
+  "tipAnchor": [
+    98,
+    188
+  ],
+  "displayScale": 0.75,
+  "status": "CALIBRATED",
+  "calibration": "Original long-arm RGBA visually inspected; nib high-alpha apex [98,188]; displayed width543 height1629, forearm exits bottom"
+}
