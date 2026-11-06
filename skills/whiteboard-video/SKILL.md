@@ -35,3 +35,6 @@ description: 制作和修改白板讲解动画（Whiteboard Animation），把�
 新整片制作必须读取并执行 [展示层合同](harness/PRESENTATION.md)，运行其中配置校验后方可交付。它只管理固定屏幕层及平台选择，与D01–D11世界层分别工作。
 
 SwainTalk片头片尾读取 [连续画布品牌站](harness/BRAND-STATIONS.md)：原Logo与精确口号位于同一世界画布，镜头连续进入正文/离开正文，品牌展示时隐藏绘画手。它是整片宿主合同，不增加动画配方或冒称自动渲染API。
+
+## 默认绘画风格
+每次资产准备必须先读 [粗线平涂讲解漫画](harness/DRAWING-STYLE.md)，将style ID、tokens、实体特征与参考角色传入同一style packet。后续模型/Agent沿用该packet并按验收表实看输出；不是仅写“手绘”关键词。

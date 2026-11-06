@@ -1,0 +1,11 @@
+{
+  "style_id": "swaintalk-bold-flat-cartoon-v1",
+  "selection": "User explicitly selected three reference screenshots on 2026-11-06",
+  "images_distributed": false,
+  "reference_sha256": [
+    "435a193fda87f32c4b89055c235f660be038f20df2a6c091bbb68160ea676564",
+    "062220d6a131e2caf1835789f294afa92f4cfce23571d37755893dd13a3bcc52",
+    "c62b69408192b3a62860f7c2caa0d21e5372cf171707ed11e09f6dcdc997f7db"
+  ],
+  "parameter_basis": "Engineering starting values, not measured screenshot color/geometry values"
+}

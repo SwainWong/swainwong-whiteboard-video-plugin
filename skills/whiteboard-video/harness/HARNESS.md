@@ -42,3 +42,6 @@
 ## SwainTalk 连续画布首尾
 
 制作SwainTalk整片时执行 [品牌站合同](BRAND-STATIONS.md)。品牌展示阶段隐藏手是首尾边界特例，不放宽正文跨对象连续手部要求；品牌站属worldLayer，常驻小水印属screenLayer。
+
+## 默认线条与平涂风格
+W02按 [DRAWING-STYLE](DRAWING-STYLE.md)具体执行：粗黑轮廓、饱满平涂、成人讲解漫画、有机语义群组。结构可信允许漫画夸张；指定实体仍要可辨认。

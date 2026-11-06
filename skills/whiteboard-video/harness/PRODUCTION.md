@@ -15,7 +15,7 @@ Required project records:
 
 ## Visual grammar: mandatory
 
-P01. Use mature simple editorial drawings: confident black contours, believable proportions and enough distinctive detail. Simple means economical and drawable, not generic stick figures or complex painted scenes.
+P01. Apply DRAWING-STYLE.md (swaintalk-bold-flat-cartoon-v1): bold near-black contours, opaque saturated flat colors and expressive adult editorial cartoons. Believable structure permits caricature; named subjects retain recognizable identity. Thin pale line art, stick figures and dense painted scenes do not satisfy this default.
 P02. Almost every sentence or short semantic passage must map to a visual cue. A held relevant drawing can support adjacent sentences if the mapping explains why. No arbitrary quota of new objects per second.
 P03. Arrange unequal organic clusters on an extensible canvas. Vary scale, placement and drawing direction around semantic relationships. Do not make every stage a neat row, equal grid or repeated left-to-right checklist. Keep intentional whitespace and readable hierarchy.
 P04. No visible 1–6 drawing-order numbers. Production IDs stay in metadata. Legitimate data values remain permitted.
