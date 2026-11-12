@@ -17,15 +17,18 @@ def identity(base,name):
 def fixture(base):
     # Synthetic bytes only test identities/configuration, not playable audio or artistic quality.
     (base/'voice.wav').write_bytes(b'synthetic audio identity fixture')
-    (base/'paths.json').write_text('{"paths":[{"d":"M0 0L10 10"}]}')
+    (base/'paths.json').write_text(json.dumps({'scene':{'effectId':'D01','durationFrames':90,'pen':{'layers':[{'id':'ink'}],'strokes':[{'id':'s1','layer':'ink','d':'M0 0L10 10','width':5,'color':'#151515','start':20,'end':23}]}}}))
     sentences=[{'id':f'h{i}','phase':'hook','text':f'Hook sentence {i}.','start':i-1,'end':i} for i in range(1,4)]
     sentences += [{'id':'brand','phase':'brand','text':'SwainTalk. Follow the tech. Follow the money.','start':3,'end':6},
                   {'id':'b1','phase':'body','text':'A person receives a message.','start':6,'end':8},
                   {'id':'b2','phase':'body','text':'The message opens a door.','start':8,'end':10}]
+    for s in sentences:
+        if s['phase']!='brand': s['targets']=[{'id':'t-'+s['id'],'mention':s['text'],'depiction':'person and message','entity_type':'object'}]
     (base/'narration.json').write_text(json.dumps({'audio':identity(base,'voice.wav'),'sentences':sentences}))
     brand={'start':3,'end':6,'first_identity_at':3,'phrases':[{'text':text,'start':3+i,'end':4+i,'visible_start':3+i,'visible_end':6} for i,text in enumerate(m.BRAND_PHRASES)]}
     events=[{'id':'v-'+s['id'],'sentence_id':s['id'],'subject':'person and message','meaning':s['text'],'kind':'draw_paths','start':s['start'],'end':s['end']-.2,'readable_until':s['end'],'asset':identity(base,'paths.json')} for s in sentences if s['phase']!='brand']
-    data={'schema':'whiteboard.production.v1','duration':10,'narration':identity(base,'narration.json'),'brand':brand,'visual_events':events}
+    data={'schema':'whiteboard.production.v2','duration':10,'narration':identity(base,'narration.json'),'brand':brand,'visual_events':events}
+    data['canvas']={'world_id':'paper','persistent':True,'layout':'semantic_freeform','elements':[{'id':'el-'+e['id'],'event_id':e['id'],'target_ids':['t-'+e['sentence_id']],'role':'drawing','world_id':'paper','bounds':[i*100, (i%2)*120,80,80],'reveal':{'method':'pen_path','program':identity(base,'paths.json'),'layer_id':'ink','offset':e['start'],'fps':30}} for i,e in enumerate(events)],'overlaps':[], 'camera':{'world_id':'paper','interpolation':'continuous','route_basis':'Follow related subjects','keyframes':[{'t':0,'x':0,'y':0,'scale':1},{'t':10,'x':100,'y':200,'scale':1}]}}
     (base/'production.json').write_text(json.dumps(data))
     return data
 
@@ -36,6 +39,8 @@ class Production(unittest.TestCase):
             base=Path(d);x=fixture(base)
             self.assertEqual(m.validate(x,base),[])
             x['visual_events'][0]['kind']='footage'
+            x['canvas']['elements'][0]['role']='footage'
+            x['canvas']['elements'][0]['reveal']={'method':'hook_footage'}
             self.assertEqual(m.validate(x,base),[])
 
     def test_missing_sentence_hold_text_and_paragraph_event_fail(self):
@@ -86,10 +91,19 @@ class Production(unittest.TestCase):
             review={'candidate_sha256':x['candidate']['sha256'],'timeline_sha256':x['timeline']['sha256'],
                     'narration_sha256':x['narration']['sha256'],'normal_speed_viewing':True,'actual_audio_listening':True,
                     'hook_no_brand':'PASS','brand_av_sync':'PASS','sentences':[{'id':e['sentence_id'],'status':'PASS','evidence':'synthetic test record only'} for e in x['visual_events']]}
-            for key,field in [('visual_events_sha256','visual_events'),('brand_sha256','brand')]:
+            for key,field in [('visual_events_sha256','visual_events'),('brand_sha256','brand'),('canvas_sha256','canvas')]:
                 review[key]=hashlib.sha256(json.dumps(x[field],sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+            review['canvas_checks']={rule:{'status':'PASS','evidence':'synthetic test only'} for rule in ('pen_contact','no_automatic_reveal','literal_semantics','freeform_layout','canvas_continuity')}
             (base/'review.json').write_text(json.dumps(review));x['review']=identity(base,'review.json')
             self.assertEqual(m.validate(x,base,'delivery'),[])
+            old_x=copy.deepcopy(x)
+            x['canvas']['camera']['route_basis']='changed route'
+            self.assertTrue(any('stale canvas' in e for e in m.validate(x,base,'delivery')))
+            x=old_x
+            checks=review.pop('canvas_checks')
+            (base/'review.json').write_text(json.dumps(review));x['review']=identity(base,'review.json')
+            self.assertTrue(any('actual pen_contact evidence' in e for e in m.validate(x,base,'delivery')))
+            review['canvas_checks']=checks
             review['sentences'].append(dict(review['sentences'][0],status='REVISE'))
             (base/'review.json').write_text(json.dumps(review));x['review']=identity(base,'review.json')
             self.assertTrue(any('unique review' in e for e in m.validate(x,base,'delivery')))
@@ -104,7 +118,7 @@ class Production(unittest.TestCase):
     def test_malformed_inputs_and_path_escape(self):
         with tempfile.TemporaryDirectory() as d:
             base=Path(d)
-            for data in [None,{},[],{'schema':'whiteboard.production.v1','duration':float('nan')}]:
+            for data in [None,{},[],{'schema':'whiteboard.production.v2','duration':float('nan')}]:
                 self.assertTrue(m.validate(data,base))
             x=fixture(base);x['narration']['path']='../outside.json'
             self.assertTrue(any('escapes' in e for e in m.validate(x,base)))

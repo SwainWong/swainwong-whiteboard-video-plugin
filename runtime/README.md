@@ -18,9 +18,10 @@ node check-scene.cjs examples/image-replacement.json
 npx remotion render src/index.ts WhiteboardRecipe out/custom.mp4 --props examples/image-replacement.json
 ```
 
-`check-scene.cjs` also accepts an unwrapped scene for validation. Rendering uses the wrapper. The canonical TypeScript interface is `src/scene.ts`; import `src/library.ts` for components. `WhiteboardRecipe` rejects missing effect-specific inputs instead of silently drawing the example car or SALE lettering. Titles are optional ordinary reading labels; a user scene has no example footer.
+`check-scene.cjs` also accepts an unwrapped scene for validation. Rendering uses the wrapper. The canonical TypeScript interface is `src/scene.ts`; import `src/library.ts` for components. `WhiteboardRecipe` rejects missing effect-specific inputs instead of silently drawing the example car or SALE lettering. In legacy standalone recipes titles are optional ordinary reading labels; strict scene.pen prohibits baked titles; a user scene has no example footer.
 
-- D01: `draw.paths` ordered paths and `draw.cue`, optionally drawing coordinates/scale/fill frame.
+- D01 strict: `pen.layers/strokes`, see [pen program](../docs/PEN-PROGRAM.md). Outline, paint and raster masks follow the same pen position; no completion fill.
+- D01 legacy: `draw.paths` ordered paths and `draw.cue`, optionally drawing coordinates/scale/fill frame.
 - D02: completed `objects` plus the same drawing inputs.
 - D03: `objects` with entry `timing`.
 - D04/D05: `objects` move up/left; `draw` supplies the next sketch. Translation distance is fixed at 1200/800 px at 1920×1080.
@@ -30,7 +31,7 @@ npx remotion render src/index.ts WhiteboardRecipe out/custom.mp4 --props example
 - D09: `nodes: [{id,x,y,width,height,object}]` and `edges: [{from,to}]`. Prepared cartoon or image content is interchangeable. Only downward graph edges with >=100 px vertical clearance are supported; no general obstacle router.
 - D10: `stages` must contain completed snapshot identities and provenance. It only zooms from the last stage to a single vertical canvas; it never invents missing stages and exposes no tour mode.
 
-Each `SceneNode` has optional x/y/scale and an `asset`. Asset types: `builtin` (car/person/factory/document), `image` (public-relative src, positive width/height), `paths` (ordered SVG path objects), `group` (child SceneNodes). Remote URLs and path traversal are rejected. Import images into your project's public folder first. Source images need appropriate usage rights and enough resolution; only explicit `paths` can be truly drawn stroke by stroke. A photo is placed/faded rather than falsely treated as handwritten vectors.
+Each `SceneNode` has optional x/y/scale and an `asset`. Asset types: `builtin` (car/person/factory/document), `image` (public-relative src, positive width/height), `paths` (ordered SVG path objects), `group` (child SceneNodes). Remote URLs and path traversal are rejected. Import images into your project's public folder first. Source images need appropriate usage rights and enough resolution; only explicit `paths` can be truly drawn stroke by stroke. Strict scene.pen reveals original photo pixels with a pen-linked mask; legacy placement/fade remains standalone only. Neither is recovered handwriting.
 
 A cue is `{id,start,end,readHold}` in 30fps composition frames. Drawing computes path length, enforces its declared speed budget and requires enough complete-object time. User paths are never silently truncated. Reduce complete objects or prepare a simpler complete sketch if rejected. Scene duration must include hold and hand exit. The computed drawing plan sets fillAt to the reading-hold deadline by default; explicit fillAt must lie between drawEnd and that deadline. D04/D05 new drawing starts after the board movement finishes. The render remains deterministic and uses no hand opacity fade. Cross-composition editing still owns its handoff; the library does not pretend to have a global whole-film hand planner.
 
@@ -41,3 +42,5 @@ Font outline source: the bundled SALE glyph paths were regenerated from Noto San
 ## Browser runtime
 
 Remotion and its CLI are pinned together at 4.0.540. On the development Mac, the newly downloaded Headless Shell crashed before composition loading; the already installed Chrome successfully rendered. `render-all.py` accepts `REMOTION_BROWSER_EXECUTABLE` and passes it to Remotion's official `--browser-executable` option. Set this to your own compatible browser executable if necessary; the package contains no machine-specific browser path. Direct CLI calls can use the same official flag. This browser fallback is part of the recorded runtime evidence, not a claim that every host browser has been tested.
+
+Strict full films require production v2 and its entity/element/world records. D04/D05 legacy fixed-axis motions and prebuilt contents are not an infinite-world host camera. The host supplies persistent world transforms and continuous camera routes, then verifies actual transitions.

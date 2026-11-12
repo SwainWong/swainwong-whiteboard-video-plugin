@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Check declared hook, brand timing and sentence coverage; never certify pixels/audio."""
+import importlib.util
 import hashlib
 import json
 import math
@@ -7,8 +8,12 @@ from pathlib import Path
 import re
 import sys
 
-BODY_KINDS = {'draw_paths', 'outline_trace', 'hand_place'}
-HOOK_KINDS = BODY_KINDS | {'footage', 'photo'}
+_canvas_spec = importlib.util.spec_from_file_location('whiteboard_canvas_check', Path(__file__).with_name('check_canvas.py'))
+_canvas = importlib.util.module_from_spec(_canvas_spec)
+_canvas_spec.loader.exec_module(_canvas)
+
+BODY_KINDS = {'draw_paths', 'outline_trace', 'brush_reveal'}
+HOOK_KINDS = BODY_KINDS | {'footage'}
 BRAND_PHRASES = ['SwainTalk', 'Follow the tech.', 'Follow the money.']
 
 
@@ -55,7 +60,7 @@ def validate(data, base, mode='plan'):
     if not isinstance(data, dict):
         return ['production must be an object']
     require(mode in {'plan', 'delivery'}, 'mode must be plan or delivery')
-    require(data.get('schema') == 'whiteboard.production.v1', 'production schema required')
+    require(data.get('schema') == 'whiteboard.production.v2', 'production v2 required: migrate pen, entity and canvas records')
     duration = data.get('duration')
     if not require(number(duration) and duration > 0, 'positive duration required'):
         return errors
@@ -147,6 +152,8 @@ def validate(data, base, mode='plan'):
             covered.add(sid)
     required = {s['id'] for s in sentences if s['phase'] != 'brand'}
     for sid in sorted(required-covered): errors.append(f'V01: sentence {sid} has no qualifying visual event')
+    if not errors:
+        errors.extend(_canvas.validate_canvas(data, sentences, artifact))
     if mode == 'delivery':
         candidate = artifact(data.get('candidate'), 'candidate video')
         timeline = artifact(data.get('timeline'), 'editable timeline')
@@ -162,6 +169,11 @@ def validate(data, base, mode='plan'):
                         require(expected is not None and review.get(key)==expected, f'review: stale {key}')
                     require(review.get('visual_events_sha256') == hashlib.sha256(json.dumps(events,sort_keys=True,ensure_ascii=False).encode()).hexdigest(), 'review: stale visual events')
                     require(review.get('brand_sha256') == hashlib.sha256(json.dumps(brand,sort_keys=True,ensure_ascii=False).encode()).hexdigest(), 'review: stale brand timing')
+                    require(review.get('canvas_sha256') == hashlib.sha256(json.dumps(data.get('canvas'),sort_keys=True,ensure_ascii=False).encode()).hexdigest(), 'review: stale canvas')
+                    checks=review.get('canvas_checks',{})
+                    for rule in ('pen_contact','no_automatic_reveal','literal_semantics','freeform_layout','canvas_continuity'):
+                        row=checks.get(rule,{}) if isinstance(checks,dict) else {}
+                        require(isinstance(row,dict) and row.get('status')=='PASS' and isinstance(row.get('evidence'),str) and bool(row['evidence'].strip()), f'delivery: actual {rule} evidence required')
                     require(review.get('normal_speed_viewing') is True and review.get('actual_audio_listening') is True, 'delivery: actual viewing and listening records required')
                     require(review.get('hook_no_brand') == 'PASS' and review.get('brand_av_sync') == 'PASS', 'delivery: hook/brand review must pass')
                     rows = review.get('sentences',[])

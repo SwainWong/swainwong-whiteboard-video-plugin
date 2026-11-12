@@ -1,0 +1,100 @@
+{
+  "scene": {
+    "effectId": "D01",
+    "durationFrames": 360,
+    "pen": {
+      "layers": [
+        {
+          "id": "color",
+          "clip": "M 604 364 H 956 V 596 H 604 Z"
+        },
+        {
+          "id": "outline"
+        }
+      ],
+      "strokes": [
+        {
+          "id": "outline",
+          "layer": "outline",
+          "d": "M 600 360 H 960 V 600 H 600 Z",
+          "width": 8,
+          "color": "#151515",
+          "start": 30,
+          "end": 90
+        },
+        {
+          "id": "paint-0",
+          "layer": "color",
+          "d": "M 600 375 H 960",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 105,
+          "end": 123
+        },
+        {
+          "id": "paint-1",
+          "layer": "color",
+          "d": "M 960 405 H 600",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 126,
+          "end": 144
+        },
+        {
+          "id": "paint-2",
+          "layer": "color",
+          "d": "M 600 435 H 960",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 147,
+          "end": 165
+        },
+        {
+          "id": "paint-3",
+          "layer": "color",
+          "d": "M 960 465 H 600",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 168,
+          "end": 186
+        },
+        {
+          "id": "paint-4",
+          "layer": "color",
+          "d": "M 600 495 H 960",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 189,
+          "end": 207
+        },
+        {
+          "id": "paint-5",
+          "layer": "color",
+          "d": "M 960 525 H 600",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 210,
+          "end": 228
+        },
+        {
+          "id": "paint-6",
+          "layer": "color",
+          "d": "M 600 555 H 960",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 231,
+          "end": 249
+        },
+        {
+          "id": "paint-7",
+          "layer": "color",
+          "d": "M 960 585 H 600",
+          "width": 34,
+          "color": "#F2D72E",
+          "start": 252,
+          "end": 270
+        }
+      ]
+    }
+  }
+}

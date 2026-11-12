@@ -66,6 +66,15 @@ class WorkspaceContracts(unittest.TestCase):
             video.write_bytes(b'changed')
             with self.assertRaisesRegex(ValueError, 'stale'): project.check_assets(root, scene)
 
+    def test_pen_image_asset_identity_and_escape(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); (root/'public').mkdir(); (root/'public'/'photo.png').write_bytes(b'fixture')
+            scene={'pen':{'layers':[{'id':'photo','image':{'src':'photo.png'}}]}}
+            with patch.object(project,'raw_rgba',return_value=b'pixels'):
+                self.assertEqual(project.check_assets(root,scene)[0]['asset'],'photo.png')
+            scene['pen']['layers'][0]['image']['src']='../outside.png'
+            with self.assertRaises(ValueError): project.check_assets(root,scene)
+
     def test_recursive_image_discovery(self):
         nodes = [{'asset': {'type': 'group', 'children': [
             {'asset': {'type': 'image', 'src': 'photo.png'}}]}}]

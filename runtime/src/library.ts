@@ -17,3 +17,6 @@ export type {PalmPlaceProps} from './PalmPlace';
 export {WhiteboardRecipe} from './Root';
 export type {RecipeScene,SceneNode,GlyphData} from './scene';
 export {validateScene,validateNodes,drawingPlan,defaultDrawScale} from './scene';
+export {PenDrawing} from './PenDrawing';
+export {validatePen,strokeProgress,penTip} from './PenProgram';
+export type {PenProgram,PenLayer,PenStroke} from './PenProgram';

@@ -6,3 +6,14 @@ const base=JSON.parse(fs.readFileSync(__dirname+'/../examples/image-replacement.
 const draw=JSON.parse(fs.readFileSync(__dirname+'/../examples/ordered-strokes.json')).scene;bad({...draw,durationFrames:120});bad({...draw,draw:{...draw.draw,cue:{id:'too-short',start:30,end:32,readHold:1}}});bad({effectId:'D12',durationFrames:240});bad({...base,objects:[]});bad({...draw,draw:{...draw.draw,fillAt:30}});bad({...draw,draw:{...draw.draw,fillAt:141}});
 const up={...draw,effectId:'D04',objects:base.objects,draw:{...draw.draw,cue:{id:'early',start:90,end:170,readHold:30}}};bad(up);
 const single={effectId:'D11',durationFrames:240,glyphs:{width:100,height:1000,glyphs:[{x:0,d:'M 0 0 H 100 V 1000 H 0 Z'}]}};ok(single);bad({...single,glyphs:{...single.glyphs,height:undefined}});bad({...single,glyphs:{...single.glyphs,height:100}});console.log(JSON.stringify({passed:count}));
+const {penTip,strokeProgress}=require('../src/PenProgram.ts');
+const strict=JSON.parse(fs.readFileSync(__dirname+'/../examples/pen-painted-shape.json')).scene;
+bad({...strict,title:'Preset title'});bad({...strict,objects:base.objects});
+let pen=structuredClone(strict.pen);pen.strokes[0].d='M0 0L10 0M100 100L110 100';bad({...strict,pen});
+pen=structuredClone(strict.pen);pen.strokes[1].start=pen.strokes[0].end;bad({...strict,pen});
+pen=structuredClone(strict.pen);pen.strokes[0].end=31;bad({...strict,pen});
+const stroke={id:'line',layer:'ink',d:'M100 100L300 100',width:8,color:'#151515',start:30,end:50};
+assert.equal(strokeProgress(stroke,29),0);assert.equal(strokeProgress(stroke,40),.5);assert.equal(strokeProgress(stroke,80),1);
+assert.deepEqual(penTip({layers:[{id:'ink'}],strokes:[stroke]},40),{x:200,y:100});
+assert.equal(penTip({layers:[{id:'ink'}],strokes:[stroke]},0),null);count+=5;
+console.log(JSON.stringify({passed:count,includes:'strict pen timing, subpaths, travel and tip alignment'}));

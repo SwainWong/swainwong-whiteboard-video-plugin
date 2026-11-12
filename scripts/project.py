@@ -79,6 +79,7 @@ def check_assets(project, scene):
     project = Path(project).resolve()
     names = list(node_images(scene.get('objects'))) + list(node_images(scene.get('foreground')))
     names += list(node_images([n['object'] for n in scene.get('nodes', [])]))
+    names += [layer['image']['src'] for layer in scene.get('pen', {}).get('layers', []) if layer.get('image')]
     evidence = []
     for name in sorted(set(names)):
         path = local_asset(project, name)

@@ -72,3 +72,7 @@ python3 scripts/update_latest.py
 ## 整片制作检查
 
 0.3.0整片需要production.json（完整句清单、最终旁白身份、品牌配音和逐句画面事件），并在presentation.json中设置production_path。批量制作前执行 `python3 scripts/check_presentation.py PROJECT/presentation.json --mode plan`；交付前执行 `--mode delivery`。缺清单、漏句、开场品牌提前、品牌配音不同步或缺实际听看记录时拒绝对应检查。完整格式和边界见 [制作检查](PRODUCTION-CHECK.md)。
+
+## 0.4.0迁移
+
+新整片执行production v2及 [全程落笔合同](../skills/whiteboard-video/harness/PEN-SEMANTICS-CANVAS.md)。已有v1须补实体参考、全元素笔触和canvas记录；既有视频/工程不会因更新插件自动合格。D01严格模式使用scene.pen，参考 [笔触程序](PEN-PROGRAM.md)。创建新工程或显式迁移新runtime后重新校验受影响窗口，不能仅改manifest版本。
