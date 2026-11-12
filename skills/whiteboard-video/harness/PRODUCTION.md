@@ -21,7 +21,7 @@ P03. Arrange unequal organic clusters on an extensible canvas. Vary scale, place
 P04. No visible 1–6 drawing-order numbers. Production IDs stay in metadata. Legitimate data values remain permitted.
 P05. Use multiple purposeful marker colors, consistently across meanings. Do not force every object to blue. Background highlight colors are configurable; strokes have irregular but controlled edges, not perfect rounded rectangle pills. Stable seeded irregularity must not shimmer frame to frame.
 P06. Pictures supplement drawings at comparable object scale, each tied to a specific spoken idea. Do not give a third-party photo an entire stage by default or use an unrelated photo as decoration. Required image coverage must be tracked explicitly.
-P07. Every named person, organization, logo and product must be recognizable when named; for example Binance uses its actual logo and CZ uses an identity-preserving portrait. Consult real references for silhouette and distinctive details; never substitute a generic person or generic car. Avoid invented product features or depicting an illustration as documentary footage.
+P07. Every explicitly identified person, organization, brand and product must retain recognizable identity. Use the appropriate original mark, identity-preserving portrait or distinctive product form, grounded in project-supplied references. Consult real references for silhouette and distinctive details; never substitute a generic person or generic car. Avoid invented product features or depicting an illustration as documentary footage.
 
 ## Animation and timing: mandatory
 

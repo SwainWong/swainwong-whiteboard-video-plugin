@@ -34,7 +34,7 @@
 python3 <plugin-root>/scripts/project.py render PROJECT examples/pen-painted-shape.json --output out/pen-check.mp4
 ```
 
-具体CLI参数以`project.py render --help`为准。原图需由项目明确提供，本包不附带币安/CZ参考素材。
+具体CLI参数以`project.py render --help`为准。原图需由项目明确提供，通用插件不预置具体项目的实体参考素材。
 
 整片对接：将各局部素材坐标统一变换到canvas世界坐标，并以`offset + localFrame/30`同步全片。宿主只显露已绘制像素，不能在素材结束后切到更完整的终图；连续手部和相机需宿主实现并复核。旧workspace不自动获取这个组件，需从新版建立工程或显式迁移源文件后重新验证。
 

@@ -35,7 +35,7 @@ class Canvas(unittest.TestCase):
         self.check_change(named,'identity reference')
         with tempfile.TemporaryDirectory() as d:
             base=Path(d);x=fixture(base);n=json.loads((base/'narration.json').read_text());s=n['sentences'][-1]
-            s['text']='CZ speaks.';s['targets']=[{'id':'t-b2','mention':'CZ','depiction':'CZ portrait speaking','entity_type':'named_person','identity':'CZ','recognition_cues':'reference facial silhouette','reference':identity(base,'paths.json'),'source':'synthetic reference fixture'}]
+            s['text']='Person A speaks.';s['targets']=[{'id':'t-b2','mention':'Person A','depiction':'referenced person speaking','entity_type':'named_person','identity':'Person A','recognition_cues':'reference facial silhouette','reference':identity(base,'paths.json'),'source':'synthetic reference fixture'}]
             (base/'narration.json').write_text(json.dumps(n));x['narration']=identity(base,'narration.json')
             self.assertEqual(m.validate(x,base),[])
             s['targets'][0]['mention']='Someone else'
