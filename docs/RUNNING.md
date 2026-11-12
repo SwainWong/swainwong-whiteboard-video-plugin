@@ -68,3 +68,7 @@ python3 scripts/update_latest.py
 更新要求 Git、Python 3.10+、Codex CLI 与 GitHub 网络访问。源码包与锁放在 `$CODEX_HOME/whiteboard-updates`（默认 `~/.codex/whiteboard-updates`）；`last-success.json` 是历史证据，不能用来跳过下次联网。依赖缺失、断网、包或安装身份不符时命令非零退出，停止生产并修复相应错误后重新运行。不能直接修改安装缓存。
 
 已有工程及其自定义 runtime 不被升级器覆盖。新工程复制最新模板并记录插件版本；旧工程若需要新的 runtime，应保留原工程，创建新工程迁移素材与输入并重新验证。包清单 `source_commit` 和逐文件哈希用于区分版本号相同但内容不同的情况。更新成功不代表风格、观看或听音验收通过。
+
+## 整片制作检查
+
+0.3.0整片需要production.json（完整句清单、最终旁白身份、品牌配音和逐句画面事件），并在presentation.json中设置production_path。批量制作前执行 `python3 scripts/check_presentation.py PROJECT/presentation.json --mode plan`；交付前执行 `--mode delivery`。缺清单、漏句、开场品牌提前、品牌配音不同步或缺实际听看记录时拒绝对应检查。完整格式和边界见 [制作检查](PRODUCTION-CHECK.md)。

@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 """Validate full-film presentation inputs, not rendered pixels or AV acceptance."""
 import hashlib
+import importlib.util
 import json
 import math
 from pathlib import Path
 import sys
 PROFILE = Path(__file__).resolve().parents[1] / 'docs/presentation-profile.json'
 
-def validate(data, base):
+_spec = importlib.util.spec_from_file_location('whiteboard_production_check', Path(__file__).with_name('check_production.py'))
+production = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(production)
+
+def validate(data, base, mode='plan'):
     errors=[]
     def require(ok, msg):
         if not ok: errors.append(msg)
@@ -46,12 +51,31 @@ def validate(data, base):
     require(path.is_file(),'logo asset missing')
     if path.is_file(): require(hashlib.sha256(path.read_bytes()).hexdigest()==defaults['logo']['sha256'] or bool(data.get('logo_override_basis')),'original logo hash mismatch')
     require(bool(data.get('logo_only_reason')),'corner logo-only readability reason required')
+    production_name = data.get('production_path')
+    if not isinstance(production_name, str) or not production_name:
+        errors.append('production_path required: hook, brand voice and every sentence must be checked')
+    else:
+        production_path = (base / production_name).resolve()
+        if Path(production_name).is_absolute() or not production_path.is_relative_to(base.resolve()) or not production_path.is_file():
+            errors.append('production_path must be an existing project-relative file')
+        else:
+            try:
+                plan = json.loads(production_path.read_text())
+                errors.extend(production.validate(plan, production_path.parent, mode))
+                require(plan.get('duration') == duration, 'production and presentation duration must match')
+            except (OSError, ValueError, TypeError, AttributeError) as e:
+                errors.append(f'production_path: {e}')
     return errors
 
 if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('manifest',type=Path)
+    parser.add_argument('--mode',choices=['plan','delivery'],default='plan')
+    args=parser.parse_args()
     try:
-        path=Path(sys.argv[1]); data=json.loads(path.read_text())
-        errors=validate(data,path.parent)
+        path=args.manifest; data=json.loads(path.read_text())
+        errors=validate(data,path.parent,args.mode)
     except (IndexError,ValueError,TypeError,OSError) as e: errors=[str(e)]
     print(json.dumps({'status':'FAIL' if errors else 'PASS','scope':'configuration only; not pixels or audiovisual acceptance','errors':errors},ensure_ascii=False,indent=2))
     sys.exit(bool(errors))

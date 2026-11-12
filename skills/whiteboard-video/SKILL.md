@@ -54,3 +54,9 @@ SwainTalk片头片尾读取 [连续画布品牌站](harness/BRAND-STATIONS.md)�
 
 ## 默认绘画风格
 每次资产准备必须先读 [粗线平涂讲解漫画](harness/DRAWING-STYLE.md)，将style ID、tokens、实体特征与参考角色传入同一style packet。后续模型/Agent沿用该packet并按验收表实看输出；不是仅写“手绘”关键词。
+
+## 开场节奏与逐句画面（0.3.0）
+
+任何新制或修订整片先读 PRODUCTION.md / BRAND-STATIONS.md 和 [制作检查合同](../../docs/PRODUCTION-CHECK.md)：先3–5句主题引入，期间无频道品牌；再说出频道名和精确slogan，与品牌动画对齐；正文每个完整口播句至少一个对应的新绘制或摆图动作，不能按音频段落共用静态图标。相关句可在同一画布连续增画，不机械切页。
+
+最终音轨逐句登记到 narration.json，production.json绑定该清单、资产和brand时码；presentation.json必须指向production_path。批量制作前运行 `python3 <plugin-root>/scripts/check_presentation.py PROJECT/presentation.json --mode plan`，交付前运行 `--mode delivery`。不通过就修复对应句/时码，不能用仅渲染成功、保留旧音轨或静态图充数。缺真实听看证据保留未验收状态，不编造review PASS。独立D01–D11素材开发不强制全片品牌。

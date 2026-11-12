@@ -16,7 +16,7 @@ Required project records:
 ## Visual grammar: mandatory
 
 P01. Apply DRAWING-STYLE.md (swaintalk-bold-flat-cartoon-v1): bold near-black contours, opaque saturated flat colors and expressive adult editorial cartoons. Believable structure permits caricature; named subjects retain recognizable identity. Thin pale line art, stick figures and dense painted scenes do not satisfy this default.
-P02. Almost every sentence or short semantic passage must map to a visual cue. A held relevant drawing can support adjacent sentences if the mapping explains why. No arbitrary quota of new objects per second.
+P02. Every complete spoken content sentence has at least one new relevant cartoon drawing, outline-traced subject, or hand-placed picture action timed to that sentence. Segment by spoken sentences, not subtitle fragments or paragraph-length audio files. Each sentence needs its own event ID and explicit subject/meaning; one event cannot cover an entire paragraph. Existing drawings may remain, but a static hold, caption, keyword card, camera move or unrelated decoration alone does not count. Related sentences may extend the same organic scene through new semantic objects/details; do not cut to a new page or reset the hand for every sentence. Hook sentences may instead use relevant footage/photos. Brand name/slogan is the explicit original-logo exception. If timing is insufficient, revise wording, voice timing or complete secondary detail; do not silently drop sentence coverage.
 P03. Arrange unequal organic clusters on an extensible canvas. Vary scale, placement and drawing direction around semantic relationships. Do not make every stage a neat row, equal grid or repeated left-to-right checklist. Keep intentional whitespace and readable hierarchy.
 P04. No visible 1–6 drawing-order numbers. Production IDs stay in metadata. Legitimate data values remain permitted.
 P05. Use multiple purposeful marker colors, consistently across meanings. Do not force every object to blue. Background highlight colors are configurable; strokes have irregular but controlled edges, not perfect rounded rectangle pills. Stable seeded irregularity must not shimmer frame to frame.
@@ -51,7 +51,7 @@ For full-film delivery, apply PRESENTATION.md and explicitly select OpenFilm, Ch
 ## Acceptance gates and failure handling
 
 G1 Content: each material factual claim has evidence; uncertain claims qualified or removed. Missing source is a content issue, not a keyword issue.
-G2 Coverage: every sentence has a relevant visual mapping or documented intentional hold; no orphan image or silent text-heavy paragraph.
+G2 Coverage: every content sentence in the final narration inventory has a unique qualifying timed visual action and subject/meaning. No intentional-hold exemption. Run check_production.py in plan mode before batch rendering; missing cues block that batch, then delivery mode and actual per-sentence listening/viewing before acceptance.
 G3 Assets: identities recognizable, sources recorded, drawable paths available for actual handwritten actions; missing inputs stop only the affected effect.
 G4 Timing: required draw + travel + hold fits its cue window. No truncated object, jittery hand or repetitive disappearance.
 G5 Layout: inspect full-resolution and small output; no collisions, equal-grid fatigue, accidental numbered sequence, hidden captions or logo.
@@ -60,3 +60,14 @@ G7 Delivery: render/decode and audio checks bind to the exact candidate hash. Au
 G8 Publishing: thumbnail/title/description reflect the same candidate; chapter times match; count and save final copy; preserve evidence cutoff.
 
 On failure return rule ID, affected cue/time, observed problem, evidence and minimum repair. Recheck changed windows after rerender. Never mark authoring rules as automatic checks merely because this document exists.
+
+## Hook → spoken brand → illustrated explanation (mandatory)
+
+H01. Start with 3–5 complete spoken sentences introducing today's topic, stakes or question. Each has topic-specific footage, cartoon action or a relevant image. No channel announcement, logo, watermark, slogan or branded opener during this hook. A title alone does not satisfy the visual mapping.
+H02. Only after the last hook sentence completes, enter the SwainTalk brand station, then the body. Keep the hook on the global audio clock. Do not force old narration/caption timings to survive a changed opening; regenerate affected audio, subtitles, chapters and progress.
+B01. The intro speaks “SwainTalk. Follow the tech. Follow the money.” using the selected voice. Align channel-name audio to readable original Logo and each slogan phrase to its visible text. These words must actually exist in the final narration; an unrelated topic voice-over under the logo does not satisfy this requirement.
+B02. Use final audio phrase timings, not assumed 0–4 second brand presets. Retain readable brand content throughout the corresponding spoken phrase and exit only after the complete slogan and natural release. Outro brand speech, when present, follows the same alignment rule. Do not manufacture audio approval from metadata.
+
+Project handoff: `production.json` + hashed `narration.json` (final audio identity and all complete sentence cues) + visual events/asset identities + brand phrase windows. See [executable contract](../../../docs/PRODUCTION-CHECK.md). `presentation.json` must reference `production_path`; presentation validation also runs these checks, so omitting the production map cannot produce a configuration PASS.
+
+Plan checks enforce declared counts, mappings, timing and source identities. Delivery checks additionally require candidate/timeline identities and actual review records bound to narration, brand timing and visual events. They do not watch/listen or judge semantic similarity themselves. Never fabricate PASS rows; unchecked or failing rows keep delivery unaccepted. A sentence inventory must be checked against the full actual narration; combining three sentences into one record is not compliance.

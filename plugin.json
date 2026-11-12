@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "swainwong-whiteboard-video-plugin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Create mature whiteboard explainer videos with eleven source-backed animation recipes, calibrated hands, narration budgets and executable input contracts.",
   "author": {"name": "SwainWong"},
   "keywords": ["whiteboard-animation", "explainer-video", "remotion", "hand-drawn", "harness"],

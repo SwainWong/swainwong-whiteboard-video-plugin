@@ -98,3 +98,7 @@ D08/D11的总帧数至少为`20 + glyph数量 × 27 + 100`，不足直接拒绝�
 ## 整片展示层输入（独立于 scene）
 
 `presentation.json` 为全片合成合同，不传入 D01–D11 scene，不改变旧效果接口。必需字段及默认token见 [PRESENTATION](../skills/whiteboard-video/harness/PRESENTATION.md) 和 [profile](presentation-profile.json)。制作前校验配置，交付前以最终音轨时长重新运行 `python3 scripts/check_presentation.py presentation.json`。失败只阻止整片展示层交付，不阻止独立动画素材准备。输出JSON报告含配置范围和错误，退出码0/1；不自动创建平台工程或给出像素/AV通过。
+
+## 整片逐句制作清单（0.3.0）
+
+production.json独立于D01–D11 scene，绑定最终旁白句清单、3–5句主题引入、频道名/口号配音时码及每句至少一个绘制或摆图事件。presentation.json必须通过production_path引用它，展示检查同步验证覆盖与时码；具体字段及plan/delivery区别见 [PRODUCTION-CHECK](PRODUCTION-CHECK.md)。静态保持不再作为整句唯一覆盖的例外。该检查不自动生成素材、分句、剪辑或识别视听语义。

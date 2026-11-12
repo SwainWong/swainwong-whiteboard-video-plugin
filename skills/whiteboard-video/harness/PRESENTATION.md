@@ -28,6 +28,8 @@ x=0,y=0,width=1920,height=70，深灰#24272bcc，玫红#d32e68d9，白字，参�
 
 底中x=960，黑底框底边1010（距底70）；白字实际可见字高约48，黑底86%不透明，紧贴每行，左右padding10–16，上下6–10。最多两行，第二行向上展开；无永久全宽黑条、无顶部备用槽、无逐句位置漂移。中文建议Noto Sans SC 500/700；其他语言按字形覆盖与可读性选字体，字体与许可保存项目。
 
+主题引入的3–5句期间隐藏全部频道Logo、slogan及小水印；首次品牌出现以BRAND-STATIONS的实际口播窗口为准。
+
 主语言与字幕语言独立选择；显式none不造轨。最终口播后按短语切cue，不按整句数量硬切；单cue≤4.5秒，中文≤20可见字符且≤12字符/秒；英文去空格≤56字符且≤24字符/秒。不要拆开专名、否定词、日期、金额和完整数字单位。单语一行输入，双语每种语言各一行且ID/时码对齐，由唯一观众字幕渲染权威组成；确需放宽提供明确覆盖、最终像素和独立可读性证据。
 
 不同时启用平台自动字幕与烧录字幕。原片烧录只有位置/内容/时序/样式均符合才按cue跳过再渲染；否则换源或安全处理，不用大黑板盖证据。字幕冲突先删可选说明，再移主体/重排画布或换素材，不移动固定字幕槽。
@@ -40,10 +42,12 @@ x=0,y=0,width=1920,height=70，深灰#24272bcc，玫红#d32e68d9，白字，参�
 
 ## 可执行与视觉检查
 
-运行 `python3 scripts/check_presentation.py PROJECT/presentation.json`。项目复制profile为layout，并提供schema、platform、selection_basis、size、duration、spoken_language、subtitle_languages（数组，可空）、subtitle_authority、chapters（start/end/label）、logo_path与logo_only_reason。路径相对该JSON，禁止机器专用路径；logo文件缺失/身份不符拒绝。明确用户替换Logo用logo_override_basis记录。参数覆盖在layout_override中记录依据，并附review_evidence路径。
+运行 `python3 scripts/check_presentation.py PROJECT/presentation.json`。项目复制profile为layout，并提供production_path（指向逐句制作清单，缺失拒绝）、schema、platform、selection_basis、size、duration、spoken_language、subtitle_languages（数组，可空）、subtitle_authority、chapters（start/end/label）、logo_path与logo_only_reason。路径相对该JSON，禁止机器专用路径；logo文件缺失/身份不符拒绝。明确用户替换Logo用logo_override_basis记录。参数覆盖在layout_override中记录依据，并附review_evidence路径。
 
 该命令只检查配置、来源身份、章节连续性与必须字段，不会自动创建OpenFilm/ChatCut工程，不解析MP4或识别字体、语言、重复字幕。交付前必须运行，并额外提交：单/双行及最长字幕、每章边界、半程/结尾进度、浅深背景Logo、画布运动极值的最终输出帧；完整听看核同步/不闪/可读。改音频或总时长须重算字幕、章节与全局进度。机械PASS不能代替实际播放和用户确认。
 
 ## 首尾品牌站与角标交接
 
 首尾大品牌组合执行 [BRAND-STATIONS](BRAND-STATIONS.md)，位于worldLayer；正文角标仍是固定screenLayer。品牌展示期间允许隐藏角标与绘画手，防止重复品牌和遮挡；不允许以此例外逐对象淡出。最终导航时间域、字幕与声音统一映射，首尾新增时长计入全片时钟。
+
+全片先运行 `check_presentation.py presentation.json --mode plan`；它同时检查production_path中的开场句数、品牌口播窗口和逐句画面覆盖。交付前改用 `--mode delivery`，要求候选视频、时间线和实际听看记录身份一致。规范详见 [制作检查](../../../docs/PRODUCTION-CHECK.md)。
