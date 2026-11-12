@@ -126,7 +126,8 @@ def init_project(destination, install=False):
                     ignore=shutil.ignore_patterns('node_modules', 'out', '.npm-cache',
                                                   '.whiteboard', '__pycache__', '*.log'))
     (destination / '.whiteboard-project.json').write_text(json.dumps({
-        'plugin': 'swainwong-whiteboard-video-plugin', 'version': '0.1.0',
+        'plugin': 'swainwong-whiteboard-video-plugin',
+        'version': json.loads((PLUGIN_ROOT / 'plugin.json').read_text())['version'],
         'mutable_workspace': True}, indent=2) + '\n')
     if install:
         check_environment(install=True)
@@ -212,7 +213,7 @@ def capture_stage(project, video_file, stage_id, frame=None):
             'note': 'Verify that the selected frame is a completed stage; capture alone is not creative acceptance.'}
 
 
-def main():
+def main(verified_release=None):
     parser = argparse.ArgumentParser(description=__doc__)
     subs = parser.add_subparsers(dest='command', required=True)
     init = subs.add_parser('init'); init.add_argument('destination'); init.add_argument('--install', action='store_true')
@@ -223,6 +224,15 @@ def main():
         if command == 'render': sub.add_argument('--output', help='New MP4 path, absolute or relative to PROJECT')
     args = parser.parse_args()
     try:
+        if verified_release is None:
+            import importlib.util
+            import update_latest
+            release = update_latest.ensure_latest()
+            latest = Path(release['plugin_root']) / 'scripts/project.py'
+            spec = importlib.util.spec_from_file_location('latest_whiteboard_project', latest)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return module.main(verified_release=release)
         if args.command == 'init':
             result = {'workspace': str(init_project(args.destination, args.install))}
         elif args.command == 'check':
@@ -231,8 +241,9 @@ def main():
             result = capture_stage(args.project, args.video, args.id, args.frame)
         else:
             result = render_scene(args.project, args.scene, args.output)
+        result['plugin_release'] = verified_release
         print(json.dumps(result, ensure_ascii=False, indent=2))
-    except (ValueError, KeyError, TypeError, OSError, subprocess.CalledProcessError) as error:
+    except (ValueError, KeyError, TypeError, OSError, RuntimeError, subprocess.TimeoutExpired, subprocess.CalledProcessError) as error:
         print(f'Whiteboard input/runtime error: {error}', file=sys.stderr)
         return 1
     return 0

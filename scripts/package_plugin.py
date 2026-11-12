@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +29,11 @@ def package(output):
     for folder in FOLDERS:
         if (ROOT / folder).exists():
             candidates.extend((ROOT / folder).rglob('*'))
+    version = json.loads((ROOT / 'plugin.json').read_text())['version']
+    try:
+        commit = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True, stderr=subprocess.DEVNULL).strip()
+    except subprocess.CalledProcessError:
+        commit = None
     inventory = {}
     for source in sorted(set(candidates)):
         rel = source.relative_to(ROOT)
@@ -42,7 +48,7 @@ def package(output):
         shutil.copy2(source, target)
         inventory[str(rel)] = hashlib.sha256(target.read_bytes()).hexdigest()
     (staged / 'PACKAGE-MANIFEST.json').write_text(json.dumps({
-        'name': NAME, 'version': '0.1.0', 'files': inventory,
+        'name': NAME, 'version': version, 'source_commit': commit, 'files': inventory,
         'excludes': ['dependencies', 'rendered videos', 'reference video', 'machine state', 'credentials']
     }, indent=2) + '\n')
     market = output / '.agents/plugins/marketplace.json'
@@ -52,7 +58,7 @@ def package(output):
         'plugins': [{'name': NAME, 'source': {'source': 'local', 'path': f'./{NAME}'},
                      'policy': {'installation': 'AVAILABLE', 'authentication': 'ON_INSTALL'},
                      'category': 'Productivity'}]}, indent=2) + '\n')
-    archive = output / f'{NAME}-0.1.0.zip'
+    archive = output / f'{NAME}-{version}.zip'
     with zipfile.ZipFile(archive, 'w', zipfile.ZIP_DEFLATED) as bundle:
         for path in staged.rglob('*'):
             if path.is_file(): bundle.write(path, path.relative_to(output))

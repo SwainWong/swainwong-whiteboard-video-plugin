@@ -10,7 +10,7 @@ codex plugin marketplace add ./dist
 codex plugin add swainwong-whiteboard-video-plugin@swainwong-whiteboard-local
 ```
 
-打包器生成`dist/`本地marketplace和0.1.0版本zip。安装插件与创建视频工程是两件事：不要直接改安装包中的runtime或把渲染输出写进插件。
+打包器生成`dist/`本地marketplace和与 `plugin.json` 一致的版本zip。安装插件与创建视频工程是两件事：不要直接改安装包中的runtime或把渲染输出写进插件。
 
 ## 创建可编辑工程
 
@@ -52,3 +52,19 @@ python3 scripts/project.py capture-stage ../my-whiteboard-video out/CompositionN
 ## 当前验证边界
 
 技术验证含Python wrapper测试、runtime输入边界测试、11项示例实际渲染及自定义输入的独立尝试。具体数量与当前产物身份以交付验证报告为准，不把文档中的测试描述当运行证明。解码成功、源帧像素相符和独立输入尝试不等于正常速度视听或用户接受。
+
+## 制作前更新
+
+首次从当前源码打包安装后，每次制作开始或继续时运行：
+
+```sh
+python3 scripts/update_latest.py
+```
+
+入口固定信任本项目 GitHub 仓库的 `main`，不是 GitHub Release 或最高版本 tag。每次浅克隆最新 main，记录提交、按源码生成包，使用 Codex marketplace list/remove/add 迁移同名旧来源（添加失败恢复旧来源），调用 `codex plugin add`，核对安装清单及全部文件 SHA256，再核对远端 main 未在更新期间变化。变化则要求重试。没有离线继续、TTL 或旧版本回退模式。
+
+成功 JSON 中的 `skill` 与 `required_read` 是 Agent 下一步必须实际阅读的文件；不要继续使用旧会话已加载的文档。CLI 无法替模型完成阅读，也不能拦截绕过本插件的任意外部工具。正式 project.py 命令自动执行更新并在同一进程转交最新安装入口；Python 内部函数和 runtime 直调仅用于开发测试。
+
+更新要求 Git、Python 3.10+、Codex CLI 与 GitHub 网络访问。源码包与锁放在 `$CODEX_HOME/whiteboard-updates`（默认 `~/.codex/whiteboard-updates`）；`last-success.json` 是历史证据，不能用来跳过下次联网。依赖缺失、断网、包或安装身份不符时命令非零退出，停止生产并修复相应错误后重新运行。不能直接修改安装缓存。
+
+已有工程及其自定义 runtime 不被升级器覆盖。新工程复制最新模板并记录插件版本；旧工程若需要新的 runtime，应保留原工程，创建新工程迁移素材与输入并重新验证。包清单 `source_commit` 和逐文件哈希用于区分版本号相同但内容不同的情况。更新成功不代表风格、观看或听音验收通过。
