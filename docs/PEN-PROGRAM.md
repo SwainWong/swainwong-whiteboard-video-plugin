@@ -24,7 +24,7 @@
 - 图层可选`image: {src,x,y,width,height}`，src是工程public内可由FFmpeg解码的PNG/JPEG等位图相对路径；SVG标志先准备路径或显式栅格化副本，不能假设本机FFmpeg可解SVG。此时该层所有笔触累积成局部alpha mask，原图只在笔刷经过处显露；`color`仍须合法，但遮罩使用白色。wrapper同时检查图片文件和解码身份。
 - `strokes`按实际落笔顺序排列，id唯一、layer存在、d只有一条连续子路径（一个M/m）。多个离散轮廓拆成多笔并预留移笔时间。width为世界像素、color为#RRGGBB；start/end为30fps素材帧号。
 - 第一笔至少从第20帧开始；末笔结束至少留45帧供阅读和整组退场。路径平均速度上限30世界像素/帧，移笔距离也须留足帧数；时间不够报错，不删笔画。该上限不是美术速度保证，仍须按可读性放慢。
-- 色面可使用 `sweep: {bounds:[x,y,width,height], direction:"left-to-right" | "right-to-left" | "top-left-to-bottom-right"}`，目标层必须提供 `clip` 轮廓。该笔画的进度驱动区域扫显，同一时间路径驱动画笔位置，调用方需按扫色方向设置路径并核对动作；扫显是视觉效果，不代表逐像素笔尖接触。扫过全区域后完整显色，不能越出clip或用透明度整块淡入。示例见 `pen-painted-shape.json`。普通笔触速度上限30像素/帧，扫色路径允许至120像素/帧。
+- 色面可使用 `sweep: {bounds:[x,y,width,height], direction:"left-to-right" | "right-to-left" | "top-left-to-bottom-right"}`，目标层必须提供 `clip` 轮廓。该笔画的进度驱动区域扫显，同一时间路径驱动画笔位置，调用方需按扫色方向设置路径并核对动作；扫显是视觉效果，不代表逐像素笔尖接触。扫过该clip后只证明这个clip完成，不能证明整个对象完成；调用方必须先按对象列全所有目标色面、颜色和有意留白，并核对目标图与最终画面。不能越出clip或用透明度整块淡入。示例见 `pen-painted-shape.json`。普通笔触速度上限30像素/帧，扫色路径允许至120像素/帧。
 - 同一支校准笔由当前stroke前缀端点驱动，笔间连续移到下一起点，整组结束后退场。笔刷尺寸和手图笔尖的视觉匹配必须实际复核。
 - 此模式禁止同时提供`draw`、`objects`、`foreground`和非空`title`。纸面字也转为stroke；本组件不会预置题目或参考图。
 
