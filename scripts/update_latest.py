@@ -15,7 +15,7 @@ BRANCH = 'main'
 NAME = 'swainwong-whiteboard-video-plugin'
 MARKETPLACE = 'swainwong-whiteboard-local'
 REQUIRED = ['SKILL.md', 'harness/HARNESS.md', 'harness/DRAWING-STYLE.md',
-            'harness/PRODUCTION.md', 'harness/PRESENTATION.md', 'harness/BRAND-STATIONS.md', 'harness/PEN-SEMANTICS-CANVAS.md']
+            'harness/PRODUCTION.md', 'harness/PRESENTATION.md', 'harness/BRAND-STATIONS.md', 'harness/PEN-SEMANTICS-CANVAS.md', 'harness/ATTENTION-SEMANTIC-REVIEW.md']
 
 
 def run(args):

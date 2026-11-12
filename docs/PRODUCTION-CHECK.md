@@ -113,3 +113,7 @@ review.json要求：
 camera含`world_id`、`interpolation:"continuous"`、`route_basis`（为何这样移动）、`keyframes:[{t,x,y,scale},...]`。t从0到整片duration严格递增，scale正数；x/y为世界中心，连续插值。允许多方向/回看，不强制方向配额。记录并不自动装配宿主相机；禁止页索引乘屏宽、重置对象、幻灯片滑页。
 
 程序检查元数据与笔触绑定，不自动识别漏登记的事实目标、被错误分类的实体、假占用框、巨型擦除、实际可见性或重复模板。制作Agent必须逐句核对，delivery证据绑定当前canvas，实际画面不符合仍返修。具体拒绝示例与流程见[严格harness](../skills/whiteboard-video/harness/PEN-SEMANTICS-CANVAS.md)。
+
+## 0.5.0必需补充
+
+production v2新增必需attention字段，包含涂色预算、保持帧占用/尺寸、逐目标联想及独立子Agent评分。现有plan/delivery入口自动调用check_attention。格式见 [ATTENTION-CHECK](ATTENTION-CHECK.md)；旧清单缺字段会失败。

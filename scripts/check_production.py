@@ -12,6 +12,10 @@ _canvas_spec = importlib.util.spec_from_file_location('whiteboard_canvas_check',
 _canvas = importlib.util.module_from_spec(_canvas_spec)
 _canvas_spec.loader.exec_module(_canvas)
 
+_attention_spec = importlib.util.spec_from_file_location('whiteboard_attention_check', Path(__file__).with_name('check_attention.py'))
+_attention = importlib.util.module_from_spec(_attention_spec)
+_attention_spec.loader.exec_module(_attention)
+
 BODY_KINDS = {'draw_paths', 'outline_trace', 'brush_reveal'}
 HOOK_KINDS = BODY_KINDS | {'footage'}
 BRAND_PHRASES = ['SwainTalk', 'Follow the tech.', 'Follow the money.']
@@ -154,6 +158,10 @@ def validate(data, base, mode='plan'):
     for sid in sorted(required-covered): errors.append(f'V01: sentence {sid} has no qualifying visual event')
     if not errors:
         errors.extend(_canvas.validate_canvas(data, sentences, artifact))
+    if not errors:
+        target_ids={t['id'] for s in sentences if s['phase']!='brand' for t in s['targets']}
+        element_ids={e['id'] for e in data['canvas']['elements']}
+        errors.extend(_attention.validate(data.get('attention'), target_ids, element_ids, mode, artifact, sha(narration_path)))
     if mode == 'delivery':
         candidate = artifact(data.get('candidate'), 'candidate video')
         timeline = artifact(data.get('timeline'), 'editable timeline')
@@ -170,6 +178,7 @@ def validate(data, base, mode='plan'):
                     require(review.get('visual_events_sha256') == hashlib.sha256(json.dumps(events,sort_keys=True,ensure_ascii=False).encode()).hexdigest(), 'review: stale visual events')
                     require(review.get('brand_sha256') == hashlib.sha256(json.dumps(brand,sort_keys=True,ensure_ascii=False).encode()).hexdigest(), 'review: stale brand timing')
                     require(review.get('canvas_sha256') == hashlib.sha256(json.dumps(data.get('canvas'),sort_keys=True,ensure_ascii=False).encode()).hexdigest(), 'review: stale canvas')
+                    require(review.get('attention_sha256') == hashlib.sha256(json.dumps(data.get('attention'),sort_keys=True,ensure_ascii=False).encode()).hexdigest(), 'review: stale attention plan/reviews')
                     checks=review.get('canvas_checks',{})
                     for rule in ('pen_contact','no_automatic_reveal','literal_semantics','freeform_layout','canvas_continuity'):
                         row=checks.get(rule,{}) if isinstance(checks,dict) else {}
