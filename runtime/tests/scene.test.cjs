@@ -17,3 +17,11 @@ assert.equal(strokeProgress(stroke,29),0);assert.equal(strokeProgress(stroke,40)
 assert.deepEqual(penTip({layers:[{id:'ink'}],strokes:[stroke]},40),{x:200,y:100});
 assert.equal(penTip({layers:[{id:'ink'}],strokes:[stroke]},0),null);count+=5;
 console.log(JSON.stringify({passed:count,includes:'strict pen timing, subpaths, travel and tip alignment'}));
+
+const sweepScene=JSON.parse(fs.readFileSync(__dirname+'/../examples/pen-painted-shape.json')).scene;
+ok(sweepScene);
+for(const dir of ['right-to-left','top-left-to-bottom-right']){const q=structuredClone(sweepScene);q.pen.strokes[1].sweep.direction=dir;ok(q);}
+{const q=structuredClone(sweepScene);delete q.pen.layers[0].clip;bad(q);}
+{const q=structuredClone(sweepScene);q.pen.strokes[1].sweep.direction='unknown';bad(q);}
+{const q=structuredClone(sweepScene);q.pen.strokes[1].sweep.bounds=[0,0,-1,10];bad(q);}
+console.log(JSON.stringify({passed:count,includes:'clipped directional color sweeps'}));

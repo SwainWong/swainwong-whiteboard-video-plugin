@@ -83,4 +83,4 @@ Negative constraints: photorealistic skin, dense painted illustration, thin mono
 
 ## 形成过程与直接语义（0.4.0）
 
-饱满平涂是最终视觉要求，不代表色面可以自动出现。执行 [PEN-SEMANTICS-CANVAS](PEN-SEMANTICS-CANVAS.md)，按轮廓和涂抹路径逐区形成；原图可由笔刷局部显露，不能称为真实笔顺。style packet同时携带逐句实体目标、身份参考、必需辨识特征和world坐标；固定三位置模板与通用替身即使线条颜色正确也不合格。
+饱满平涂是最终视觉要求，不代表色面可以自动出现。执行 [PEN-SEMANTICS-CANVAS](PEN-SEMANTICS-CANVAS.md)，轮廓逐笔形成，色面可在轮廓内随画笔快速扫显；原图可由笔刷局部显露，不能称为真实笔顺。style packet同时携带逐句实体目标、身份参考、必需辨识特征和world坐标；固定三位置模板与通用替身即使线条颜色正确也不合格。
