@@ -106,3 +106,7 @@ production.json独立于D01–D11 scene，绑定最终旁白句清单、3–5句
 ## 0.4.0严格整片与可执行笔触
 
 D01新增可选scene.pen替代draw，真实字段与样例见 [PEN-PROGRAM](PEN-PROGRAM.md)；它将轮廓/涂色/图片遮罩交给同一笔尖时钟。整片production升级v2，要求实体参考、全元素笔触绑定、世界坐标和连续camera记录，详见 [PRODUCTION-CHECK](PRODUCTION-CHECK.md)。旧自动填色/淡入/摆图不能满足严格整片；世界相机与跨素材接续仍由宿主实现。
+
+## 0.6.0构图与混合入场
+
+[构图合同](../skills/whiteboard-video/harness/COMPOSITION-DEPTH-MIX.md)规定4～7群组与浅立体细节。scripts/layouts.py读取20套layout-catalog并输出归一化或safe-area像素位置。attention.shots记录layout_id、group_id、entry；canvas记录illustration_id及fly/fade资产/退出策略。宿主负责实际位置和动画实现，检查器不自动合成画面。

@@ -16,7 +16,7 @@ _attention_spec = importlib.util.spec_from_file_location('whiteboard_attention_c
 _attention = importlib.util.module_from_spec(_attention_spec)
 _attention_spec.loader.exec_module(_attention)
 
-BODY_KINDS = {'draw_paths', 'outline_trace', 'brush_reveal'}
+BODY_KINDS = {'draw_paths', 'outline_trace', 'brush_reveal', 'fly', 'fade'}
 HOOK_KINDS = BODY_KINDS | {'footage'}
 BRAND_PHRASES = ['SwainTalk', 'Follow the tech.', 'Follow the money.']
 
@@ -162,6 +162,18 @@ def validate(data, base, mode='plan'):
         target_ids={t['id'] for s in sentences if s['phase']!='brand' for t in s['targets']}
         element_ids={e['id'] for e in data['canvas']['elements']}
         errors.extend(_attention.validate(data.get('attention'), target_ids, element_ids, mode, artifact, sha(narration_path)))
+        by_id={e['id']:e for e in data['canvas']['elements']}
+        for shot in (data.get('attention') or {}).get('shots',[]):
+            if not isinstance(shot,dict): continue
+            for subject in shot.get('subjects',[]):
+                if not isinstance(subject,dict): continue
+                el=by_id.get(subject.get('element_id')) if isinstance(subject.get('element_id'),str) else None
+                if el:
+                    require(subject.get('group_id')==el.get('illustration_id',el['id']), 'attention group_id must match canvas illustration_id')
+                    gid=el.get('illustration_id',el['id'])
+                    methods={member.get('reveal',{}).get('method') for member in by_id.values() if member.get('illustration_id',member['id'])==gid}
+                    allowed=(methods & {'fly','fade'}) or {'pen'}
+                    require(subject.get('entry') in allowed, 'attention entry must match whole illustration group reveal')
     if mode == 'delivery':
         candidate = artifact(data.get('candidate'), 'candidate video')
         timeline = artifact(data.get('timeline'), 'editable timeline')

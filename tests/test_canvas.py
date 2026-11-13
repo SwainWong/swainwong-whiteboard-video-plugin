@@ -20,7 +20,7 @@ class Canvas(unittest.TestCase):
     def test_no_auto_fill_fade_or_preset_text(self):
         for method in ['fade','auto_fill','preexisting','rect_wipe','hand_place']:
             with self.subTest(method=method):
-                self.check_change(lambda x,b:x['canvas']['elements'][0]['reveal'].update(method=method),'no fade')
+                self.check_change(lambda x,b:x['canvas']['elements'][0]['reveal'].update(method=method),'R03' if method=='fade' else 'no fade')
         def legacy(x,b):
             payload=json.loads((b/'paths.json').read_text());payload['scene']['title']='preset text'
             (b/'paths.json').write_text(json.dumps(payload))

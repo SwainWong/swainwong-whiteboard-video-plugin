@@ -117,3 +117,7 @@ camera含`world_id`、`interpolation:"continuous"`、`route_basis`（为何这�
 ## 0.5.0必需补充
 
 production v2新增必需attention字段，包含涂色预算、保持帧占用/尺寸、逐目标联想及独立子Agent评分。现有plan/delivery入口自动调用check_attention。格式见 [ATTENTION-CHECK](ATTENTION-CHECK.md)；旧清单缺字段会失败。
+
+## 0.6.0混合入场
+
+visual_events.kind新增fly/fade。对应canvas元素role仍为drawing/image，reveal包含method:fly/fade、asset文件身份及exit:hold/fly/fade，不要求pen program。illustration_id用于跨轮廓/色层汇总完整群组；全片直接群组最多floor(N/3)，每个视口也按attention.subjects检查。纸面文字无此例外。旧全手绘限制由 [新合同](../skills/whiteboard-video/harness/COMPOSITION-DEPTH-MIX.md)覆盖。

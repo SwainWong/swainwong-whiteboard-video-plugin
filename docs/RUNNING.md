@@ -76,3 +76,7 @@ python3 scripts/update_latest.py
 ## 0.4.0迁移
 
 新整片执行production v2及 [全程落笔合同](../skills/whiteboard-video/harness/PEN-SEMANTICS-CANVAS.md)。已有v1须补实体参考、全元素笔触和canvas记录；既有视频/工程不会因更新插件自动合格。D01严格模式使用scene.pen，参考 [笔触程序](PEN-PROGRAM.md)。创建新工程或显式迁移新runtime后重新校验受影响窗口，不能仅改manifest版本。
+
+## 0.6.0迁移
+
+旧attention.shots需补layout_id、subjects.group_id/entry，独立review补craft_scores/craft_evidence；按当前60～85%构图目标与35%单组面积上限重新检查。飞入/淡入作为有额度的完整插画入场，不允许手绘半成品借机自动补齐。布局工具见 [构图合同](../skills/whiteboard-video/harness/COMPOSITION-DEPTH-MIX.md)。

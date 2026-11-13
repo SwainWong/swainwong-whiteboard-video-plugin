@@ -30,7 +30,7 @@ def fixture(base):
     data={'schema':'whiteboard.production.v2','duration':10,'narration':identity(base,'narration.json'),'brand':brand,'visual_events':events}
     data['canvas']={'world_id':'paper','persistent':True,'layout':'semantic_freeform','elements':[{'id':'el-'+e['id'],'event_id':e['id'],'target_ids':['t-'+e['sentence_id']],'role':'drawing','world_id':'paper','bounds':[i*100, (i%2)*120,80,80],'reveal':{'method':'pen_path','program':identity(base,'paths.json'),'layer_id':'ink','offset':e['start'],'fps':30}} for i,e in enumerate(events)],'overlaps':[], 'camera':{'world_id':'paper','interpolation':'continuous','route_basis':'Follow related subjects','keyframes':[{'t':0,'x':0,'y':0,'scale':1},{'t':10,'x':100,'y':200,'scale':1}]}}
     (base/'attention-frame.png').write_bytes(b'synthetic frame identity only')
-    data['attention']={'paint':[],'shots':[{'id':'hold','viewport':[100,100],'safe_rect':[5,5,90,90],'frame':identity(base,'attention-frame.png'),'subjects':[{'element_id':'el-v-h1','rect':[5,5,90,90],'focal':True}]}], 'associations':[{'target_id':'t-'+e['sentence_id'],'literal_meaning':e['meaning'],'depiction':e['subject'],'why_direct':'synthetic explanation','likely_confusion':'synthetic alternative','alternatives':['option one','option two']} for e in events]}
+    data['attention']={'paint':[],'shots':[{'id':'hold','layout_id':'cluster-4-01','viewport':[100,100],'safe_rect':[5,5,90,90],'frame':identity(base,'attention-frame.png'),'subjects':[{'element_id':'el-v-'+e['sentence_id'],'group_id':'el-v-'+e['sentence_id'],'entry':'pen','rect':[5+(i%2)*46,5+(i//2)*46,44,44],'focal':i==0} for i,e in enumerate(events[:4])]}], 'associations':[{'target_id':'t-'+e['sentence_id'],'literal_meaning':e['meaning'],'depiction':e['subject'],'why_direct':'synthetic explanation','likely_confusion':'synthetic alternative','alternatives':['option one','option two']} for e in events]}
     (base/'production.json').write_text(json.dumps(data))
     return data
 
@@ -92,7 +92,7 @@ class Production(unittest.TestCase):
             x['candidate']=identity(base,'candidate.mp4');x['timeline']=identity(base,'film.html')
             import hashlib
             for row in x['attention']['associations']:
-                row['review']={'author_agent':'synthetic-author','reviewer_agent':'synthetic-reviewer','blind_first':True,'blind_guess':'synthetic guess','scores':[5,4,4,4],'status':'PASS','small_preview_readable':True,'evidence':identity(base,'paths.json'),'narration_sha256':x['narration']['sha256'],'frames_sha256':hashlib.sha256(json.dumps(x['attention']['shots'],sort_keys=True,ensure_ascii=False).encode()).hexdigest()}
+                row['review']={'author_agent':'synthetic-author','reviewer_agent':'synthetic-reviewer','blind_first':True,'blind_guess':'synthetic guess','scores':[5,4,4,4],'craft_scores':[4,4,4],'craft_evidence':'synthetic fixture only','status':'PASS','small_preview_readable':True,'evidence':identity(base,'paths.json'),'narration_sha256':x['narration']['sha256'],'frames_sha256':hashlib.sha256(json.dumps(x['attention']['shots'],sort_keys=True,ensure_ascii=False).encode()).hexdigest()}
             review={'candidate_sha256':x['candidate']['sha256'],'timeline_sha256':x['timeline']['sha256'],
                     'narration_sha256':x['narration']['sha256'],'normal_speed_viewing':True,'actual_audio_listening':True,
                     'hook_no_brand':'PASS','brand_av_sync':'PASS','sentences':[{'id':e['sentence_id'],'status':'PASS','evidence':'synthetic test record only'} for e in x['visual_events']]}

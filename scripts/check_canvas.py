@@ -65,6 +65,11 @@ def validate_canvas(data, sentences, artifact):
         if role == 'footage':
             require(event.get('kind')=='footage' and method=='hook_footage',f'R01 {eid}: footage only in topic hook')
             continue
+        if method in ('fly','fade'):
+            require(role in ('drawing','image') and event.get('kind')==method,f'R03 {eid}: direct entry only for registered illustration/image events')
+            artifact(reveal.get('asset'),f'R03 {eid} direct asset')
+            require(reveal.get('exit') in ('hold','fly','fade'),f'R03 {eid}: explicit exit/hold required')
+            continue
         expected='pen_mask' if role=='image' else 'pen_path'
         require(method==expected,f'R01 {eid}: no fade, automatic fill, preset text or placement; expected {expected}')
         program=artifact(reveal.get('program'),f'R02 {eid} pen program')
@@ -95,6 +100,15 @@ def validate_canvas(data, sentences, artifact):
                 require(number(a) and number(b) and event['start']<=offset+a/fps<offset+b/fps<=event['end'],f'R02 {eid}: ink/paint strokes must complete inside sentence event')
                 require(text(stroke.get('d')) and len(re.findall('[mM]',stroke['d']))==1 and number(stroke.get('width')) and stroke['width']>0,f'R02 {eid}: real continuous brush path/width required')
         except (OSError,ValueError,TypeError,AttributeError,KeyError): errors.append(f'R02 {eid}: invalid pen program')
+    groups={}
+    for el in ids.values():
+        if el.get('role') in ('drawing','image'):
+            group=el.get('illustration_id',el['id'])
+            if not isinstance(group,str) or not group:
+                errors.append('R03: illustration_id must be a nonempty string');continue
+            groups.setdefault(group,set()).add(el.get('reveal',{}).get('method'))
+    direct=sum(bool(methods & {'fly','fade'}) for methods in groups.values())
+    require(direct<=len(groups)//3,'R03: direct illustration groups exceed one third of all groups')
     for key,names in program_layers.items():
         require(all((key,name) in bound_layers for name in names),'R01: pen program contains uninventoried layers')
     for tid in sorted(targets.keys()-covered): errors.append(f'S01 {tid}: spoken target has no direct depicted element')

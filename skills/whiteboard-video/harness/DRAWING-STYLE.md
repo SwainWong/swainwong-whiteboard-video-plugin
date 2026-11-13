@@ -1,7 +1,9 @@
 # 默认手绘画风：粗线平涂讲解漫画
 
-Style ID: `swaintalk-bold-flat-cartoon-v1`
-English descriptor: **Bold-outline flat-color editorial explainer cartoon**.
+> 0.6.0优先修订：执行 [多插画、浅立体与混合入场](COMPOSITION-DEPTH-MIX.md)。默认4～7个完整群组，使用20套可调整布局；单组面积上限35%，有效区占用目标60～85%（机器下限60%），主体短边起点15%；最多三分之一群组可fly/fade，手绘对象不能半途淡入补齐。旧文中的全手绘、85%硬下限、20%尺寸要求由本条替代。画风升级为结构完整、带有限透视/厚度的讲解漫画。
+
+Style ID: `swaintalk-dimensional-editorial-v2`
+English descriptor: **Bold-outline dimensional editorial explainer cartoon with restrained perspective and structural detail**.
 这是描述性名称，不宣称某个作者、软件或品牌的专属画风。2026-11-06用户提供三张参考并明确选定：人物与摄像机/文件夹、向中心汇聚的机构图解、人物与法规/风险物件组合。
 
 ## 适用与优先级
@@ -54,7 +56,7 @@ English descriptor: **Bold-outline flat-color editorial explainer cartoon**.
 
 ## 固定英文提示词骨架
 
-Use style ID swaintalk-bold-flat-cartoon-v1. Create [SUBJECT] explaining [NARRATION MEANING]. Bold near-black smooth hand-drawn outlines, rounded joins, clean closed silhouettes, strong opaque flat red/blue/yellow/green/orange/cyan accents chosen by meaning, sparse darker side planes, expressive adult editorial cartoon characters with complete clothed bodies and readable gestures. Simple but recognizable functional objects. Slight organic asymmetry, no sketch scribble. Compose unequal semantic clusters with ample whitespace around [FOCAL SUBJECT], not a regular card grid. Preserve [IDENTITY FEATURES]. Match the supplied style reference images for contour weight, color blocking and detail density; do not copy their subjects or layout. [TRANSPARENT ASSET / UNIFIED LIGHT PAPER]. Only include [EXACT REQUIRED LABELS], no production numbering. Separate [REQUIRED LAYERS].
+Use style ID swaintalk-dimensional-editorial-v2. Create [SUBJECT] explaining [NARRATION MEANING]. Preserve complete anatomy, functional connections, restrained three-quarter perspective, side-plane thickness and meaningful structural details; avoid crude polygonal silhouettes. Bold near-black smooth hand-drawn outlines, rounded joins, clean closed silhouettes, strong opaque flat red/blue/yellow/green/orange/cyan accents chosen by meaning, sparse darker side planes, expressive adult editorial cartoon characters with complete clothed bodies and readable gestures. Simple but recognizable functional objects. Slight organic asymmetry, no sketch scribble. Compose unequal semantic clusters with ample whitespace around [FOCAL SUBJECT], not a regular card grid. Preserve [IDENTITY FEATURES]. Match the supplied style reference images for contour weight, color blocking and detail density; do not copy their subjects or layout. [TRANSPARENT ASSET / UNIFIED LIGHT PAPER]. Only include [EXACT REQUIRED LABELS], no production numbering. Separate [REQUIRED LAYERS].
 
 Negative constraints: photorealistic skin, dense painted illustration, thin monochrome outline, pale watercolor, gradients, glossy 3D, dramatic lighting, rough repeated sketch strokes, stick figures, toddler doodles, generic substitutes for named people/products, rigid equal-size grids, random decorative symbols, illegible generated text, extraneous numbers, background rectangles around cutout assets.
 

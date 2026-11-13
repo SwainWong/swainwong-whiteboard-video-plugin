@@ -18,7 +18,7 @@ class Attention(unittest.TestCase):
             mutations=[lambda x:x.pop('attention'),
                        lambda x:x['attention'].update(paint=[{'element_id':'el-v-h1','passes':4,'start':0,'end':1}]),
                        lambda x:x['attention'].update(paint=[{'element_id':'el-v-h1','passes':3,'start':0,'end':3}]),
-                       lambda x:x['attention']['shots'][0]['subjects'][0].update(rect=[5,5,20,20]),
+                       lambda x:x['attention']['shots'][0]['subjects'][0].update(rect=[5,5,10,10]),
                        lambda x:x['attention']['shots'][0]['subjects'].append({'element_id':'el-v-h2','rect':[5,5,5,5],'focal':True}),
                        lambda x:x['attention']['associations'].pop()]
             for change in mutations:
@@ -29,7 +29,7 @@ class Attention(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             base=Path(d);x=fixture(base);a=x['attention']
             for row in a['associations']:
-                row['review']={'author_agent':'author','reviewer_agent':'reviewer','blind_first':True,'blind_guess':'synthetic guess','scores':[5,4,4,4],'status':'PASS','small_preview_readable':True,'evidence':identity(base,'paths.json'),'narration_sha256':x['narration']['sha256'],'frames_sha256':hashlib.sha256(json.dumps(a['shots'],sort_keys=True,ensure_ascii=False).encode()).hexdigest()}
+                row['review']={'author_agent':'author','reviewer_agent':'reviewer','blind_first':True,'blind_guess':'synthetic guess','scores':[5,4,4,4],'craft_scores':[4,4,4],'craft_evidence':'synthetic fixture only','status':'PASS','small_preview_readable':True,'evidence':identity(base,'paths.json'),'narration_sha256':x['narration']['sha256'],'frames_sha256':hashlib.sha256(json.dumps(a['shots'],sort_keys=True,ensure_ascii=False).encode()).hexdigest()}
             ids={r['target_id'] for r in a['associations']};els={e['id'] for e in x['canvas']['elements']}
             def run(a):return m._attention.validate(a,ids,els,'delivery',lambda v,label:base/v['path'],x['narration']['sha256'])
             self.assertEqual(run(a),[])
