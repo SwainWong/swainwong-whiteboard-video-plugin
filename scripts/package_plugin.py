@@ -63,7 +63,13 @@ def package(output):
         for path in staged.rglob('*'):
             if path.is_file(): bundle.write(path, path.relative_to(output))
         bundle.write(market, market.relative_to(output))
-    return {'marketplace': str(output), 'plugin': str(staged), 'archive': str(archive),
+    from host_adapter import entry
+    buddy=output/f'{NAME}-{version}-workbuddy.zip'
+    with zipfile.ZipFile(buddy,'w',zipfile.ZIP_DEFLATED) as bundle:
+        bundle.writestr('whiteboard-video/SKILL.md',entry('"<本Skill目录>/package/scripts/update_latest.py"'))
+        for path in staged.rglob('*'):
+            if path.is_file():bundle.write(path,Path('whiteboard-video/package')/path.relative_to(staged))
+    return {'workbuddy_archive':str(buddy),'marketplace': str(output), 'plugin': str(staged), 'archive': str(archive),
             'file_count': len(inventory), 'archive_sha256': hashlib.sha256(archive.read_bytes()).hexdigest()}
 
 

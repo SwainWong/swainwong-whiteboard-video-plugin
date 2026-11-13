@@ -40,7 +40,7 @@
 
 ## 子Agent评审协议（必须执行）
 
-制作Agent使用可用的子Agent工具建立全新上下文（例如fork_turns=none），评审者不得是资产作者。工具不可用或子Agent不能实际看图时标记NOT_REVIEWED，不由主Agent代填PASS。
+制作Agent使用可用的子Agent工具建立全新上下文（Codex例如fork_turns=none；WorkBuddy按实际独立Agent工具，见../references/HOSTS.md），评审者不得是资产作者。工具不可用或子Agent不能实际看图时标记NOT_REVIEWED，不由主Agent代填PASS。
 
 第一轮仅提供去掉外挂答案标签的实际图像/整帧320px预览，不提供口播、文件名暗示、目标名称、prompt或制作历史。原标志固有文字无需抹去。先保存子Agent原始回答：看到了什么对象、在做什么、可能的其他解释、置信度。未保存前不得揭示答案。
 

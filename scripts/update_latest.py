@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fetch GitHub main and install/verify it before every production invocation."""
 import fcntl
+import argparse
+import importlib.util
 import hashlib
 import json
 import os
@@ -15,7 +17,7 @@ BRANCH = 'main'
 NAME = 'swainwong-whiteboard-video-plugin'
 MARKETPLACE = 'swainwong-whiteboard-local'
 REQUIRED = ['SKILL.md', 'harness/HARNESS.md', 'harness/DRAWING-STYLE.md',
-            'harness/PRODUCTION.md', 'harness/PRESENTATION.md', 'harness/BRAND-STATIONS.md', 'harness/PEN-SEMANTICS-CANVAS.md', 'harness/ATTENTION-SEMANTIC-REVIEW.md', 'harness/COMPOSITION-DEPTH-MIX.md']
+            'harness/PRODUCTION.md', 'harness/PRESENTATION.md', 'harness/BRAND-STATIONS.md', 'harness/PEN-SEMANTICS-CANVAS.md', 'harness/ATTENTION-SEMANTIC-REVIEW.md', 'harness/COMPOSITION-DEPTH-MIX.md', 'references/HOSTS.md']
 
 
 def run(args):
@@ -65,9 +67,16 @@ def register_marketplace(market):
         raise
 
 
-def ensure_latest(state_root=None, codex_home=None):
+def ensure_latest(state_root=None, codex_home=None, host=None, workbuddy_home=None, migrate=False):
     # Dedicated state; never pull/reset the author's checkout or edit installed caches.
-    home = Path(codex_home or os.environ.get('CODEX_HOME', Path.home() / '.codex')).expanduser().resolve()
+    host = host or os.environ.get('WHITEBOARD_HOST', 'codex')
+    if host not in ('codex', 'workbuddy'):
+        raise ValueError('Unsupported whiteboard host')
+    if host == 'codex':
+        home = codex_home or os.environ.get('CODEX_HOME', Path.home() / '.codex')
+    else:
+        home = workbuddy_home or os.environ.get('WORKBUDDY_HOME', Path.home() / '.workbuddy')
+    home = Path(home).expanduser().resolve()
     state = Path(state_root or home / 'whiteboard-updates').expanduser().resolve()
     state.mkdir(parents=True, exist_ok=True)
     with (state / 'update.lock').open('a') as lock:
@@ -100,15 +109,23 @@ def ensure_latest(state_root=None, codex_home=None):
             authoritative = json.loads((fresh / NAME / 'PACKAGE-MANIFEST.json').read_text())
             if expected != authoritative or not verify_package(source, authoritative):
                 raise RuntimeError('Cached release differs from GitHub; production stopped')
-            installed = home / 'plugins/cache' / MARKETPLACE / NAME / version
-            register_marketplace(market)
-            run(['codex', 'plugin', 'add', f'{NAME}@{MARKETPLACE}', '--json'])
-            if not verify_package(installed, authoritative):
-                raise RuntimeError('Codex installed bytes do not match GitHub; production stopped')
+            if host=='codex':
+                installed = home / 'plugins/cache' / MARKETPLACE / NAME / version
+                register_marketplace(market)
+                run(['codex', 'plugin', 'add', f'{NAME}@{MARKETPLACE}', '--json'])
+                if not verify_package(installed, authoritative):
+                    raise RuntimeError('Codex installed bytes do not match GitHub; production stopped')
+            else:
+                installed=source
             latest = run(['git', 'ls-remote', REPOSITORY, f'refs/heads/{BRANCH}']).split()
             if not latest or latest[0] != commit:
                 raise RuntimeError('GitHub main changed during update; retry before production')
-            result = {'version': version, 'source_commit': commit, 'repository': REPOSITORY,
+            adapter_result={}
+            if host=='workbuddy':
+                spec=importlib.util.spec_from_file_location('whiteboard_host_adapter',installed/'scripts/host_adapter.py')
+                adapter=importlib.util.module_from_spec(spec);spec.loader.exec_module(adapter)
+                adapter_result=adapter.install(home,installed,migrate)
+            result = {'host':host,'adapter':adapter_result,'version': version, 'source_commit': commit, 'repository': REPOSITORY,
                       'branch': BRANCH, 'plugin_root': str(installed),
                       'skill': str(installed / 'skills/whiteboard-video/SKILL.md'),
                       'required_read': [str(installed / 'skills/whiteboard-video' / n) for n in REQUIRED],
@@ -119,8 +136,12 @@ def ensure_latest(state_root=None, codex_home=None):
 
 
 def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--host',choices=['codex','workbuddy'],default=os.environ.get('WHITEBOARD_HOST','codex'))
+    parser.add_argument('--migrate-workbuddy',action='store_true')
+    args=parser.parse_args()
     try:
-        print(json.dumps(ensure_latest(), ensure_ascii=False, indent=2))
+        print(json.dumps(ensure_latest(host=args.host,migrate=args.migrate_workbuddy), ensure_ascii=False, indent=2))
         return 0
     except (OSError, ValueError, KeyError, RuntimeError, subprocess.TimeoutExpired) as error:
         print(f'Whiteboard update failed; DO NOT continue production: {error}', file=sys.stderr)

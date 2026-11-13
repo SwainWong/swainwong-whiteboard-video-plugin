@@ -216,6 +216,7 @@ def capture_stage(project, video_file, stage_id, frame=None):
 
 def main(verified_release=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--host', choices=['codex','workbuddy'], default=os.environ.get('WHITEBOARD_HOST','codex'))
     subs = parser.add_subparsers(dest='command', required=True)
     init = subs.add_parser('init'); init.add_argument('destination'); init.add_argument('--install', action='store_true')
     snap = subs.add_parser('capture-stage'); snap.add_argument('project'); snap.add_argument('video')
@@ -228,7 +229,7 @@ def main(verified_release=None):
         if verified_release is None:
             import importlib.util
             import update_latest
-            release = update_latest.ensure_latest()
+            release = update_latest.ensure_latest(host=args.host)
             latest = Path(release['plugin_root']) / 'scripts/project.py'
             spec = importlib.util.spec_from_file_location('latest_whiteboard_project', latest)
             module = importlib.util.module_from_spec(spec)

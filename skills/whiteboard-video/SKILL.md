@@ -11,19 +11,19 @@ description: 制作和修改白板讲解动画（Whiteboard Animation），把�
 
 ## 制作前强制更新（第一步，不可跳过）
 
-每次用户开始或继续视频制作任务，先运行本 Skill 所属插件根目录的：
+先读 [宿主执行协议](references/HOSTS.md)，确认当前是Codex还是WorkBuddy。每次用户开始或继续视频制作任务，先运行本Skill所属插件根目录的命令（把host占位替换为实际值）：
 
 ```sh
-python3 <plugin-root>/scripts/update_latest.py
+python3 <plugin-root>/scripts/update_latest.py --host <codex或workbuddy>
 ```
 
-此步骤在理解/规划新画面、生成素材、调用 OpenFilm/ChatCut 或渲染之前执行。固定从 `https://github.com/SwainWong/swainwong-whiteboard-video-plugin.git` 的 `main` 获取最新提交，通过 Codex 正式安装器更新并逐文件核验；不以版本号相等或上次成功代替本次联网。
+此步骤在理解/规划新画面、生成素材、调用 OpenFilm/ChatCut 或渲染之前执行。固定从 `https://github.com/SwainWong/swainwong-whiteboard-video-plugin.git` 的 `main` 获取最新提交，按宿主适配安装入口并逐文件核验；Codex使用正式安装器，WorkBuddy使用独立本地Skill入口，无Codex CLI依赖；不以版本号相等或上次成功代替本次联网。
 
 - 成功后必须打开返回的 `skill` 和全部 `required_read` 文件，以最新内容替换当前对话加载的旧规则，再继续制作。后续命令使用返回的 `plugin_root`。不能只更新磁盘而继续依照旧上下文。
-- 网络、Git、Codex 安装或身份校验失败就停止制作并报告具体原因；不得静默使用旧版本，不需要再次询问是否升级。
-- `project.py` 的 init/check/render/capture-stage CLI 也会先执行相同更新并转交最新入口。直接 npx 或内部 Python 函数是开发接口，不能作为生产绕行路径。
+- 网络、Git、当前宿主安装或身份校验失败就停止制作并报告具体原因；不得静默使用旧版本，不需要再次询问是否升级。
+- `project.py --host <codex或workbuddy>` 的 init/check/render/capture-stage CLI 也会先执行相同更新并转交最新入口。直接 npx 或内部 Python 函数是开发接口，不能作为生产绕行路径。
 - 更新不会覆盖已有视频工程的自定义 runtime、素材或剪辑。继续旧工程时记录其 runtime 版本；需要新运行时能力时创建新工程并显式迁移，不能把插件已更新说成旧工程已迁移。
-- 此机制由 Skill 指令和正式 CLI 共同执行，不是 Codex 全局启动钩子；已经加载旧版 Skill 的会话需先手动运行一次新版更新入口并重读返回文件。
+- 此机制由 Skill 指令和正式 CLI 共同执行，不是任一宿主的全局启动钩子；已经加载旧版 Skill 的会话需先手动运行一次新版更新入口并重读返回文件。
 
 ## 接收与执行
 

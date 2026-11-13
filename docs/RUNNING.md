@@ -80,3 +80,7 @@ python3 scripts/update_latest.py
 ## 0.6.0迁移
 
 旧attention.shots需补layout_id、subjects.group_id/entry，独立review补craft_scores/craft_evidence；按当前60～85%构图目标与35%单组面积上限重新检查。飞入/淡入作为有额度的完整插画入场，不允许手绘半成品借机自动补齐。布局工具见 [构图合同](../skills/whiteboard-video/harness/COMPOSITION-DEPTH-MIX.md)。
+
+## 多宿主更新
+
+0.7.0新增update_latest.py --host workbuddy及project.py --host workbuddy；Codex默认行为保持。WorkBuddy不需要Codex CLI，使用完整核验包加生成的发现入口，首次旧Skill迁移以--migrate-workbuddy保留备份。详细入口、工具能力和证据边界见 [HOSTS](../skills/whiteboard-video/references/HOSTS.md)。旧段落的Codex CLI依赖仅适用于Codex安装路径。
